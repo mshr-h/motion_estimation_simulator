@@ -7,11 +7,11 @@
 
 // Structures
 struct img_rgb_t{
-    int wt;
-    int ht;
-    unsigned char **r;
-    unsigned char **g;
-    unsigned char **b;
+	int wt;
+	int ht;
+	unsigned char **r;
+	unsigned char **g;
+	unsigned char **b;
 };
 struct pix_t{
 	int w;
@@ -24,16 +24,16 @@ extern "C" {
 #endif
 void
 img_motion_estimation(
-    struct img_rgb_t *curr_image,
-    struct img_rgb_t *prev_image,
-    int tb_size,
-    int sw_size
+	struct img_rgb_t *curr_image,
+	struct img_rgb_t *prev_image,
+	int tb_size,
+	int sw_size
 );
 struct img_rgb_t *
 img_rgb_create(
-    int wt,
-    int ht,
-    unsigned char init
+	int wt,
+	int ht,
+	unsigned char init
 );
 //
 unsigned char  **
@@ -45,4 +45,4 @@ Malloc2D_uchr(
 #ifdef __cplusplus
 }
 #endif
-#endif // MAINWINDOW_H
+#endif // IMPLAB_H

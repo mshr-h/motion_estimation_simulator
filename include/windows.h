@@ -10,4 +10,4 @@ struct img_rgb_t *
 QImage_to_img_rgb(
 	QImage *inImg
 );
-#endif // MAINWINDOW_H
+#endif // WINDOWS_H
