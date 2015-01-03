@@ -26,8 +26,9 @@ img_motion_estimation(
 	unsigned char **pimg = prev_image->r; // previous frame
 	unsigned char **cimg = curr_image->r; // current  frame
 
-	sum_min_sad=0;
-	blcks=0;
+	/* Full search start */
+	sum_min_sad = 0;
+	blcks = 0;
 	for(mb_p.h=tb_size; mb_p.h<(curr_image->ht-tb_size); mb_p.h+=tb_size) {
 		for(mb_p.w=tb_size; mb_p.w<(curr_image->wt-tb_size); mb_p.w+=tb_size) {
 			/* Integer Motion Estimation start */
@@ -59,7 +60,9 @@ img_motion_estimation(
 	ave = (int)((double)sum_min_sad/blcks + 0.5);
 	fprintf(stdout, "Full search     ave_min_sad: %d\n",ave);
 	fflush(stdout);
+	/* Full search end */
 
+	/* Current method start */
 	sum_min_sad = 0;
 	blcks = 0;
 	for(mb_p.h=tb_size; mb_p.h<(curr_image->ht-tb_size); mb_p.h+=tb_size) {
@@ -125,7 +128,9 @@ img_motion_estimation(
 	ave = (int)((double)sum_min_sad/blcks + 0.5);
 	fprintf(stdout, "Current method  ave_min_sad: %d\n",ave);
 	fflush(stdout);
+	/* Current method end */
 
+	/* Proposed method start */
 	sum_min_sad = 0;
 	blcks = 0;
 	for(mb_p.h=tb_size; mb_p.h<(curr_image->ht-tb_size); mb_p.h+=tb_size) {
@@ -202,4 +207,5 @@ img_motion_estimation(
 	ave = (int)((double)sum_min_sad/blcks + 0.5);
 	fprintf(stdout, "Proposed method ave_min_sad: %d\n",ave);
 	fflush(stdout);
+	/* Proposed method end */
 }
