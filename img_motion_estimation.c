@@ -10,9 +10,9 @@ img_motion_estimation(
 	int sw_size
 )
 {
-	struct pix_t min_p; // position of minimum SAD
+	struct pix_t min_p; // position of minimum SAD (-16 .. +16, -1 .. +1)
 	struct pix_t mb_p;  // posiiton of processing MB(Macro Block)
-	struct pix_t sw_p;  // position of SW(Search Window)
+	struct pix_t sw_p;  // position of SW(Search Window) (-16 .. +16, -1 .. +1)
 	struct pix_t tmp_p; // for SAD calculation
 	int sad;
 	int min_sad;        // size of minimum SAD
@@ -58,7 +58,7 @@ img_motion_estimation(
 		}
 	}
 	ave = (int)((double)sum_min_sad/blcks + 0.5);
-	fprintf(stdout, "Full search     ave_min_sad: %d\n",ave);
+	fprintf(stdout, "Full search     ave_min_sad: %d\n", ave);
 	fflush(stdout);
 	/* Full search end */
 
@@ -126,7 +126,7 @@ img_motion_estimation(
 		}
 	}
 	ave = (int)((double)sum_min_sad/blcks + 0.5);
-	fprintf(stdout, "Current method  ave_min_sad: %d\n",ave);
+	fprintf(stdout, "Current method  ave_min_sad: %d\n", ave);
 	fflush(stdout);
 	/* Current method end */
 
@@ -205,7 +205,7 @@ img_motion_estimation(
 		}
 	}
 	ave = (int)((double)sum_min_sad/blcks + 0.5);
-	fprintf(stdout, "Proposed method ave_min_sad: %d\n",ave);
+	fprintf(stdout, "Proposed method ave_min_sad: %d\n", ave);
 	fflush(stdout);
 	/* Proposed method end */
 }
