@@ -17,12 +17,16 @@ SOURCES += main.cpp\
     motion_estimation.cpp \
     QImage_to_img_rgb.cpp \
     img_motion_estimation.c \
-    implab.c
+    implab.c \
+    fullsearch_8bit.c \
+    fullsearch_4bit_4pix.c \
+    fullsearch_4bit_4pix_dynamic.c
 
 HEADERS  += mainwindow.h \
     include/implab.h \
     include/mainwindow.h \
-    include/windows.h
+    include/windows.h \
+    include/motion_estimation.h
 
 FORMS    += mainwindow.ui
 
