@@ -14,57 +14,59 @@ void MainWindow::motionEstimation()
 	int tb_size = 16;
 	int sw_size = 48;
 	clock_t start, end;
+	QStringList testcase;
 
-	QString curr_fileName = QFileDialog::getOpenFileName(this,
-														 tr("Open Current Image"),
-														 QDir::currentPath());
-	QString prev_fileName = QFileDialog::getOpenFileName(this,
-														 tr("Open Previous Image"),
-														 QDir::currentPath());
+	testcase.append(tr("blue_sky"));
+	testcase.append(tr("pedestrian_area"));
+	testcase.append(tr("riverbed"));
+	testcase.append(tr("rush_hour"));
+	testcase.append(tr("station2"));
+	testcase.append(tr("sunflower"));
+	testcase.append(tr("tractor"));
+	QString currentPath = QDir::currentPath() + "\\..\\motion_estimation\\inImg_db\\";
 
-	if (!curr_fileName.isEmpty()) {
-		QImage Qimg(curr_fileName);
-		if (Qimg.isNull()) {
-			QMessageBox::information(this,
-									 tr("Main Viewer"),
-									 tr("Cannot load").arg(curr_fileName));
-			return;
-		}
-
-		curr_img=QImage_to_img_rgb(&Qimg);
-	}
-
-	if (!prev_fileName.isEmpty()) {
-		QImage Qimg(prev_fileName);
-		if (Qimg.isNull()) {
-			QMessageBox::information(this,
-									 tr("Main Viewer"),
-									 tr("Cannot load").arg(prev_fileName));
-			return;
-		}
-
-		prev_img=QImage_to_img_rgb(&Qimg);
-	}
-
-	if(curr_img == NULL || prev_img == NULL) {
-		return;
-	}
-
-	if(prev_img->ht != curr_img->ht && prev_img->wt != curr_img->wt) {
-		QMessageBox::information(this,
-								 tr("Main Viewer"),
-								 tr("Image size don't match"));
-		return;
-	}
-
-	qDebug() << "current  frame:" << curr_fileName;
-	qDebug() << "previous frame:" << prev_fileName;
-	qDebug() << "tb size:" << tb_size << "sw size:" << sw_size;
-	qDebug() << "curr ht:" << curr_img->ht << "wt:" << curr_img->wt;
-	qDebug() << "prev ht:" << prev_img->ht << "wt:" << prev_img->wt;
-
+	qDebug() << "currentPath:" << currentPath;
 	start = clock();
-	img_motion_estimation(curr_img, prev_img, tb_size, sw_size);
+	for(int i = 0; i < testcase.length(); i++) {
+		QString currFileName = currentPath + testcase.at(i) + "_0.png";
+		QString prevFileName = currentPath + testcase.at(i) + "_1.png";
+
+		curr_img = loadImageToImg_rgb_t(currFileName);
+		prev_img = loadImageToImg_rgb_t(prevFileName);
+
+		if(curr_img == NULL || prev_img == NULL) {
+			return;
+		}
+
+		if(prev_img->ht != curr_img->ht && prev_img->wt != curr_img->wt) {
+			QMessageBox::information(this,
+									 tr("Main Viewer"),
+									 tr("Image size don't match"));
+			return;
+		}
+
+		printf("Case %d: %s\n", i, testcase.at(i).toStdString());
+		img_motion_estimation(curr_img, prev_img, tb_size, sw_size);
+	}
 	end   = clock();
 	qDebug() << "elapsed:" << (double)(end-start)/CLOCKS_PER_SEC << "sec";
+}
+
+struct img_rgb_t *MainWindow::loadImageToImg_rgb_t(QString path)
+{
+	struct img_rgb_t *img;
+
+	if (!path.isEmpty()) {
+		QImage Qimg(path);
+		if (Qimg.isNull()) {
+			QMessageBox::information(this,
+									 tr("Main Viewer"),
+									 tr("Cannot load").arg(path));
+			return NULL;
+		}
+
+		img=QImage_to_img_rgb(&Qimg);
+	}
+
+	return img;
 }
