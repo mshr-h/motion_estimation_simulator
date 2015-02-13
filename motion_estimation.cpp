@@ -23,6 +23,7 @@ void MainWindow::motionEstimation()
 	testcase.append(tr("station2"));
 	testcase.append(tr("sunflower"));
 	testcase.append(tr("tractor"));
+
 	QString currentPath = QDir::currentPath() + "\\..\\motion_estimation\\inImg_db\\";
 
 	qDebug() << "currentPath:" << currentPath;
