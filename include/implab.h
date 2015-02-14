@@ -35,6 +35,10 @@ img_rgb_create(
 	int ht,
 	unsigned char init
 );
+void
+img_rgb_destruct(
+	struct img_rgb_t *img
+);
 //
 unsigned char  **
 Malloc2D_uchr(

@@ -48,6 +48,8 @@ void MainWindow::motionEstimation()
 
 		printf("Case %d: %s\n", i, testcase.at(i).toStdString());
 		img_motion_estimation(curr_img, prev_img, tb_size, sw_size);
+		img_rgb_destruct(curr_img);
+		img_rgb_destruct(prev_img);
 	}
 	end   = clock();
 	qDebug() << "elapsed:" << (double)(end-start)/CLOCKS_PER_SEC << "sec";

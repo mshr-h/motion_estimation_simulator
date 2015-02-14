@@ -32,6 +32,17 @@ img_rgb_create(
 	return new_img;
 }
 
+void
+img_rgb_destruct(
+	struct img_rgb_t *img
+)
+{
+	free(img->r);
+	free(img->g);
+	free(img->b);
+	free(img);
+}
+
 unsigned char **
 Malloc2D_uchr(
 	int wt,
@@ -63,4 +74,3 @@ Malloc2D_uchr(
 	}
 	return x;
 }
-
