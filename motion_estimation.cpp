@@ -13,7 +13,7 @@ void MainWindow::motionEstimation()
 	struct img_rgb_t *prev_img=NULL;
 	int tb_size = 16;
 	int sw_size = 48;
-	clock_t start, end;
+	clock_t start;
 	QStringList testcase;
 
 	testcase.append(tr("blue_sky"));
@@ -51,8 +51,8 @@ void MainWindow::motionEstimation()
 		img_rgb_destruct(curr_img);
 		img_rgb_destruct(prev_img);
 	}
-	end   = clock();
-	qDebug() << "elapsed:" << (double)(end-start)/CLOCKS_PER_SEC << "sec";
+
+	qDebug() << "elapsed:" << (double)(clock()-start)/CLOCKS_PER_SEC << "sec";
 }
 
 struct img_rgb_t *MainWindow::loadImageToImg_rgb_t(QString path)
