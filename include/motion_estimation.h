@@ -24,3 +24,11 @@ fullsearch_4bit_4pix_dynamic(
 	int tb_size,
 	int sw_size
 );
+
+int
+fullsearch_4bit_4pix_proposed(
+	struct img_rgb_t *prev_image,
+	struct img_rgb_t *curr_image,
+	int tb_size,
+	int sw_size
+);
