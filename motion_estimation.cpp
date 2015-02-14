@@ -24,13 +24,16 @@ void MainWindow::motionEstimation()
 	testcase.append(tr("sunflower"));
 	testcase.append(tr("tractor"));
 
-	QString currentPath = QDir::currentPath() + "\\..\\motion_estimation\\inImg_db\\";
+    QDir currentPath = QDir::currentPath();
+    currentPath.cdUp();
+    currentPath.cd("motion_estimation");
+    currentPath.cd("inImg_db");
 
-	qDebug() << "currentPath:" << currentPath;
+    qDebug() << "currentPath:" << currentPath.absolutePath();
 	start = clock();
 	for(int i = 0; i < testcase.length(); i++) {
-		QString currFileName = currentPath + testcase.at(i) + "_0.png";
-		QString prevFileName = currentPath + testcase.at(i) + "_1.png";
+        QString currFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_0.png";
+        QString prevFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_1.png";
 
 		curr_img = loadImageToImg_rgb_t(currFileName);
 		prev_img = loadImageToImg_rgb_t(prevFileName);
@@ -46,7 +49,7 @@ void MainWindow::motionEstimation()
 			return;
 		}
 
-		printf("Case %d: %s\n", i, testcase.at(i).toStdString());
+        printf("Case %d: %s\n", i, qPrintable(testcase.at(i)));
 		img_motion_estimation(curr_img, prev_img, tb_size, sw_size);
 		img_rgb_destruct(curr_img);
 		img_rgb_destruct(prev_img);
@@ -57,7 +60,7 @@ void MainWindow::motionEstimation()
 
 struct img_rgb_t *MainWindow::loadImageToImg_rgb_t(QString path)
 {
-	struct img_rgb_t *img;
+    struct img_rgb_t *img = NULL;
 
 	if (!path.isEmpty()) {
 		QImage Qimg(path);
