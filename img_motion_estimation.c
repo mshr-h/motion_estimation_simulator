@@ -3,8 +3,8 @@
 
 void
 img_motion_estimation(
-	struct img_rgb_t *prev_image,
-	struct img_rgb_t *curr_image,
+	struct img_yuv_t *prev_image,
+	struct img_yuv_t *curr_image,
 	int tb_size,
 	int sw_size
 )

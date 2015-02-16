@@ -43,6 +43,72 @@ img_rgb_destruct(
 	free(img);
 }
 
+struct img_yuv_t *
+img_rgb_to_yuv(
+	struct img_rgb_t *img_rgb
+)
+{
+	int w,h;
+
+	struct img_yuv_t *out;
+
+	out=img_yuv_create(img_rgb->wt,img_rgb->ht,0);
+
+	for(h=0;h<img_rgb->ht;h++){
+		for(w=0;w<img_rgb->wt;w++){
+			out->y[h][w]=( ( 66*img_rgb->r[h][w]+129*img_rgb->g[h][w]+25*img_rgb->b[h][w]+128)>>8 )+16;
+			out->u[h][w]=( (-38*img_rgb->r[h][w]-74*img_rgb->g[h][w]+112*img_rgb->b[h][w]+128)>>8 )+128;
+			out->v[h][w]=( (112*img_rgb->r[h][w]-94*img_rgb->g[h][w]-18*img_rgb->b[h][w]+128)>>8 )+128;
+		}
+	}
+
+	return out;
+}
+
+struct img_yuv_t *
+img_yuv_create(
+	int wt,
+	int ht,
+	unsigned char init
+)
+{
+	struct img_yuv_t *img;
+
+	img=(struct img_yuv_t *)malloc(sizeof(struct img_yuv_t));
+
+	img->wt=wt;
+	img->ht=ht;
+
+	img->y=Malloc2D_uchr(img->wt,img->ht,init);
+	if(img->y==NULL){
+		printf("malloc failed (%s,%i)\n",__FILE__,__LINE__);
+	  exit(-1);
+	}
+	img->u=Malloc2D_uchr(img->wt,img->ht,init);
+	if(img->u==NULL){
+		printf("malloc failed (%s,%i)\n",__FILE__,__LINE__);
+	  exit(-1);
+	}
+	img->v=Malloc2D_uchr(img->wt,img->ht,init);
+	if(img->v==NULL){
+		printf("malloc failed (%s,%i)\n",__FILE__,__LINE__);
+	  exit(-1);
+	}
+
+	return img;
+}
+
+void
+img_yuv_destruct(
+	struct img_yuv_t *img
+)
+{
+	free(img->y[0]); free(img->y);
+	free(img->u[0]); free(img->u);
+	free(img->v[0]); free(img->v);
+	free(img);
+}
+
 unsigned char **
 Malloc2D_uchr(
 	int wt,

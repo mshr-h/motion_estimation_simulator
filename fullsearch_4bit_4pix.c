@@ -3,8 +3,8 @@
 
 int
 fullsearch_4bit_4pix(
-	struct img_rgb_t *prev_image,
-	struct img_rgb_t *curr_image,
+	struct img_yuv_t *prev_image,
+	struct img_yuv_t *curr_image,
 	int tb_size,
 	int sw_size
 )
@@ -20,8 +20,8 @@ fullsearch_4bit_4pix(
 	int pel_tb;         // pixel value
 	int sum_min_sad;
 	int average;        // average of SAD
-	unsigned char **pimg = prev_image->r; // previous frame
-	unsigned char **cimg = curr_image->r; // current  frame
+	unsigned char **pimg = prev_image->y; // previous frame
+	unsigned char **cimg = curr_image->y; // current  frame
 
 	sum_min_sad = 0;
 	blcks = 0;
