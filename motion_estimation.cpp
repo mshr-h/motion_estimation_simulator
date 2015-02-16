@@ -32,12 +32,13 @@ void MainWindow::motionEstimation()
 	currentPath.cdUp();
 	currentPath.cd("motion_estimation");
 	currentPath.cd("inImg_db");
+	currentPath.cd("rgb");
 
 	qDebug() << "currentPath:" << currentPath.absolutePath();
 	start = clock();
 	for(int i = 0; i < testcase.length(); i++) {
-		QString currFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_0.png";
-		QString prevFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_1.png";
+		QString currFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_0_rgb.png";
+		QString prevFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_1_rgb.png";
 
 		curr_img_rgb = loadImageToImg_rgb_t(currFileName);
 		prev_img_rgb = loadImageToImg_rgb_t(prevFileName);
