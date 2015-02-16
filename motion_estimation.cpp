@@ -16,24 +16,24 @@ void MainWindow::motionEstimation()
 	clock_t start;
 	QStringList testcase;
 
-	testcase.append(tr("blue_sky"));
-	testcase.append(tr("pedestrian_area"));
-	testcase.append(tr("riverbed"));
-	testcase.append(tr("rush_hour"));
-	testcase.append(tr("station2"));
-	testcase.append(tr("sunflower"));
-	testcase.append(tr("tractor"));
+	testcase.append("blue_sky");
+	testcase.append("pedestrian_area");
+	testcase.append("riverbed");
+	testcase.append("rush_hour");
+	testcase.append("station2");
+	testcase.append("sunflower");
+	testcase.append("tractor");
 
-    QDir currentPath = QDir::currentPath();
-    currentPath.cdUp();
-    currentPath.cd("motion_estimation");
-    currentPath.cd("inImg_db");
+	QDir currentPath = QDir::currentPath();
+	currentPath.cdUp();
+	currentPath.cd("motion_estimation");
+	currentPath.cd("inImg_db");
 
-    qDebug() << "currentPath:" << currentPath.absolutePath();
+	qDebug() << "currentPath:" << currentPath.absolutePath();
 	start = clock();
 	for(int i = 0; i < testcase.length(); i++) {
-        QString currFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_0.png";
-        QString prevFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_1.png";
+		QString currFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_0.png";
+		QString prevFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_1.png";
 
 		curr_img = loadImageToImg_rgb_t(currFileName);
 		prev_img = loadImageToImg_rgb_t(prevFileName);
@@ -49,7 +49,7 @@ void MainWindow::motionEstimation()
 			return;
 		}
 
-        printf("Case %d: %s\n", i, qPrintable(testcase.at(i)));
+		printf("Case %d: %s\n", i, qPrintable(testcase.at(i)));
 		img_motion_estimation(curr_img, prev_img, tb_size, sw_size);
 		img_rgb_destruct(curr_img);
 		img_rgb_destruct(prev_img);
@@ -60,7 +60,7 @@ void MainWindow::motionEstimation()
 
 struct img_rgb_t *MainWindow::loadImageToImg_rgb_t(QString path)
 {
-    struct img_rgb_t *img = NULL;
+	struct img_rgb_t *img = NULL;
 
 	if (!path.isEmpty()) {
 		QImage Qimg(path);
