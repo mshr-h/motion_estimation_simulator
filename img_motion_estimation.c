@@ -15,7 +15,7 @@ img_motion_estimation(
 				 tb_size,
 				 sw_size);
 	printf("Fullsearch 8bit             : %.1f%% (%d)\n",
-		   (double)result_fullsearch_8bit*100/result_fullsearch_8bit,
+		   result_fullsearch_8bit*100.0/result_fullsearch_8bit,
 		   result_fullsearch_8bit);
 
 	int result_fullsearch_4bit_4pix = fullsearch_4bit_4pix(
@@ -24,7 +24,7 @@ img_motion_estimation(
 				 tb_size,
 				 sw_size);
 	printf("Fullsearch 4bit 4pix        : %.1f%% (%d)\n",
-		   (double)result_fullsearch_4bit_4pix*100/result_fullsearch_8bit,
+		   result_fullsearch_4bit_4pix*100.0/result_fullsearch_8bit,
 		   result_fullsearch_4bit_4pix);
 
 	int result_fullsearch_4bit_4pix_dynamic = fullsearch_4bit_4pix_dynamic(
@@ -33,7 +33,7 @@ img_motion_estimation(
 				 tb_size,
 				 sw_size);
 	printf("Fullsearch 4bit 4pix dynamic: %.1f%% (%d)\n",
-		   (double)result_fullsearch_4bit_4pix_dynamic*100/result_fullsearch_8bit,
+		   result_fullsearch_4bit_4pix_dynamic*100.0/result_fullsearch_8bit,
 		   result_fullsearch_4bit_4pix_dynamic);
 
 	int result_fullsearch_4bit_4pix_proposed = fullsearch_4bit_4pix_proposed(
@@ -42,7 +42,7 @@ img_motion_estimation(
 				 tb_size,
 				 sw_size);
 	printf("Fullsearch 4bit 4pix dynamic: %.1f%% (%d)\n",
-		   (double)result_fullsearch_4bit_4pix_proposed*100/result_fullsearch_8bit,
+		   result_fullsearch_4bit_4pix_proposed*100.0/result_fullsearch_8bit,
 		   result_fullsearch_4bit_4pix_proposed);
 
 	fflush(stdout);

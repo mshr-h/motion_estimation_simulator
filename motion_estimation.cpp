@@ -1,4 +1,3 @@
-
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QDebug>
@@ -46,10 +45,6 @@ void MainWindow::motionEstimation()
 		curr_img_yuv = img_rgb_to_yuv(curr_img_rgb);
 		prev_img_yuv = img_rgb_to_yuv(prev_img_rgb);
 
-		if(curr_img_rgb == NULL || prev_img_rgb == NULL) {
-			return;
-		}
-
 		if(prev_img_rgb->ht != curr_img_rgb->ht && prev_img_rgb->wt != curr_img_rgb->wt) {
 			QMessageBox::information(this,
 									 tr("Main Viewer"),
@@ -57,7 +52,7 @@ void MainWindow::motionEstimation()
 			return;
 		}
 
-		printf("Case %d: %s\n", i, qPrintable(testcase.at(i)));
+		printf("Case %d: %s\n", i+1, qPrintable(testcase.at(i)));
 		img_motion_estimation(curr_img_yuv, prev_img_yuv, tb_size, sw_size);
 
 		img_rgb_destruct(curr_img_rgb);
