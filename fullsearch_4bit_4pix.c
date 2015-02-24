@@ -1,6 +1,18 @@
 #include "include/implab.h"
 #include "include/motion_estimation.h"
 
+static int
+pe(
+	int pel_tb,
+	int pel_sw
+)
+{
+	pel_sw = (pel_sw >> 4) & 0x0f;
+	pel_tb = (pel_tb >> 4) & 0x0f;
+
+	return abs(pel_sw - pel_tb);
+}
+
 int
 fullsearch_4bit_4pix(
 	struct img_yuv_t *prev_image,
@@ -38,9 +50,7 @@ fullsearch_4bit_4pix(
 						for(tmp_p.w=0; tmp_p.w<tb_size; tmp_p.w++) {
 							pel_sw = cimg[mb_p.h+sw_p.h+tmp_p.h][mb_p.w+sw_p.w+tmp_p.w];
 							pel_tb = pimg[mb_p.h+tmp_p.h][mb_p.w+tmp_p.w];
-							pel_sw = (pel_sw >> 4) & 0x0f;
-							pel_tb = (pel_tb >> 4) & 0x0f;
-							sad += abs(pel_sw - pel_tb);
+							sad += pe(pel_sw, pel_tb);
 						}
 					}
 					if(sad < min_sad) {
