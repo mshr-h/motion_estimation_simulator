@@ -21,7 +21,8 @@ SOURCES += main.cpp\
 	fullsearch_8bit.c \
 	fullsearch_4bit_4pix.c \
 	fullsearch_4bit_4pix_dynamic.c \
-	fullsearch_4bit_4pix_proposed1.c
+	fullsearch_4bit_4pix_proposed1.c \
+	fullsearch_4bit_4pix_proposed2.c
 
 HEADERS  += mainwindow.h \
 	include/implab.h \

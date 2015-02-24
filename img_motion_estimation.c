@@ -36,14 +36,23 @@ img_motion_estimation(
 		   result_fullsearch_4bit_4pix_dynamic*100.0/result_fullsearch_8bit,
 		   result_fullsearch_4bit_4pix_dynamic);
 
-	int result_fullsearch_4bit_4pix_proposed = fullsearch_4bit_4pix_proposed1(
+	int result_fullsearch_4bit_4pix_proposed1 = fullsearch_4bit_4pix_proposed1(
 				 prev_image,
 				 curr_image,
 				 tb_size,
 				 sw_size);
 	printf("Fullsearch 4bit 4pix proposed 1: %.1f%% (%d)\n",
-		   result_fullsearch_4bit_4pix_proposed*100.0/result_fullsearch_8bit,
-		   result_fullsearch_4bit_4pix_proposed);
+		   result_fullsearch_4bit_4pix_proposed1*100.0/result_fullsearch_8bit,
+		   result_fullsearch_4bit_4pix_proposed1);
+
+	int result_fullsearch_4bit_4pix_proposed2 = fullsearch_4bit_4pix_proposed2(
+				 prev_image,
+				 curr_image,
+				 tb_size,
+				 sw_size);
+	printf("Fullsearch 4bit 4pix proposed 1: %.1f%% (%d)\n",
+		   result_fullsearch_4bit_4pix_proposed2*100.0/result_fullsearch_8bit,
+		   result_fullsearch_4bit_4pix_proposed2);
 
 	fflush(stdout);
 }

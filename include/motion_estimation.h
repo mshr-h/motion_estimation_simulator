@@ -32,3 +32,10 @@ fullsearch_4bit_4pix_proposed1(
 	int tb_size,
 	int sw_size
 );
+
+fullsearch_4bit_4pix_proposed2(
+		struct img_yuv_t *prev_image,
+		struct img_yuv_t *curr_image,
+		int tb_size,
+		int sw_size
+	);
