@@ -1,5 +1,54 @@
 #include  "include/implab.h"
 
+struct img_t *
+img_create(
+	int wt,
+	int ht,
+	unsigned char init
+)
+{
+	struct img_t *new_img;
+
+	new_img=(struct img_t *)malloc(sizeof(struct img_t));
+
+	new_img->wt=wt;
+	new_img->ht=ht;
+
+	new_img->data=Malloc2D_uchr(new_img->wt,new_img->ht,init);
+	if(new_img->data==NULL){
+		printf("malloc failed (%s,%i)\n",__FILE__,__LINE__);
+		exit(-1);
+	}
+
+	return new_img;
+}
+
+void
+img_destruct(
+	struct img_t *img
+)
+{
+	free(img->data[0]); free(img->data);
+	free(img);
+}
+
+struct img_t *
+img_copy(
+	int wt,
+	int ht,
+	unsigned char **data
+)
+{
+	struct img_t *new_img = img_create(wt, ht, 0);
+	int h, w;
+	for(h=0; h<ht; h++){
+		for(w=0; w<wt; w++){
+			new_img->data[h][w] = data[h][w];
+		}
+	}
+	return new_img;
+}
+
 struct img_rgb_t *
 img_rgb_create(
 	int wt,

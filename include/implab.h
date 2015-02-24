@@ -6,6 +6,12 @@
 #include <math.h>
 
 // Structures
+struct img_t{
+	int wt;
+	int ht;
+	unsigned char **data;
+};
+
 struct img_rgb_t{
 	int wt;
 	int ht;
@@ -16,7 +22,6 @@ struct img_rgb_t{
 struct img_yuv_t{
 	int wt;
 	int ht;
-
 	unsigned char **y;
 	unsigned char **u;
 	unsigned char **v;
@@ -32,10 +37,26 @@ extern "C" {
 #endif
 void
 img_motion_estimation(
-	struct img_yuv_t *curr_image,
-	struct img_yuv_t *prev_image,
+	struct img_t *curr_image,
+	struct img_t *prev_image,
 	int tb_size,
 	int sw_size
+);
+struct img_t *
+img_create(
+	int wt,
+	int ht,
+	unsigned char init
+);
+void
+img_destruct(
+	struct img_t *img
+);
+struct img_t *
+img_copy(
+	int wt,
+	int ht,
+	unsigned char **data
 );
 struct img_rgb_t *
 img_rgb_create(

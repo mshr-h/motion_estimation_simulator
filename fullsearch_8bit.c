@@ -12,8 +12,8 @@ pe(
 
 int
 fullsearch_8bit(
-	struct img_yuv_t *prev_image,
-	struct img_yuv_t *curr_image,
+	struct img_t *prev_image,
+	struct img_t *curr_image,
 	int tb_size,
 	int sw_size
 )
@@ -28,14 +28,15 @@ fullsearch_8bit(
 	int pel_sw;         // pixel value
 	int pel_tb;         // pixel value
 	int sum_min_sad;
-	int average;            // average of SAD
-	unsigned char **pimg = prev_image->y; // previous frame
-	unsigned char **cimg = curr_image->y; // current  frame
+	int average;        // average of SAD
+
+	unsigned char **pimg = prev_image->data; // previous frame
+	unsigned char **cimg = curr_image->data; // current  frame
 
 	sum_min_sad = 0;
 	blcks = 0;
-	for(mb_p.h=tb_size; mb_p.h<(curr_image->ht-tb_size); mb_p.h+=tb_size) {
-		for(mb_p.w=tb_size; mb_p.w<(curr_image->wt-tb_size); mb_p.w+=tb_size) {
+	for(mb_p.h=tb_size; mb_p.h<(prev_image->ht-tb_size); mb_p.h+=tb_size) {
+		for(mb_p.w=tb_size; mb_p.w<(prev_image->wt-tb_size); mb_p.w+=tb_size) {
 			/* Integer Motion Estimation start */
 			min_sad = MAX_SAD;
 			for(sw_p.w=-tb_size; sw_p.w<=tb_size; sw_p.w++) {

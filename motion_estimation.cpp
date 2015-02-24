@@ -39,8 +39,8 @@ void MainWindow::motionEstimation()
 		QString currFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_0_rgb.png";
 		QString prevFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_1_rgb.png";
 
-		curr_img_rgb = loadImageToImg_rgb_t(currFileName);
-		prev_img_rgb = loadImageToImg_rgb_t(prevFileName);
+		curr_img_rgb = loadImageToImg_rgb(currFileName);
+		prev_img_rgb = loadImageToImg_rgb(prevFileName);
 
 		curr_img_yuv = img_rgb_to_yuv(curr_img_rgb);
 		prev_img_yuv = img_rgb_to_yuv(prev_img_rgb);
@@ -53,8 +53,13 @@ void MainWindow::motionEstimation()
 		}
 
 		printf("Case %d: %s\n", i+1, qPrintable(testcase.at(i)));
-		img_motion_estimation(curr_img_yuv, prev_img_yuv, tb_size, sw_size);
 
+		struct img_t *cimg = img_copy(curr_img_rgb->wt, curr_img_rgb->ht, curr_img_yuv->y);
+		struct img_t *pimg = img_copy(prev_img_rgb->wt, prev_img_rgb->ht, prev_img_yuv->y);
+		img_motion_estimation(cimg, pimg, tb_size, sw_size);
+
+		img_destruct(cimg);
+		img_destruct(pimg);
 		img_rgb_destruct(curr_img_rgb);
 		img_rgb_destruct(prev_img_rgb);
 		img_yuv_destruct(curr_img_yuv);
@@ -64,7 +69,7 @@ void MainWindow::motionEstimation()
 	qDebug() << "elapsed:" << (double)(clock()-start)/CLOCKS_PER_SEC << "sec";
 }
 
-struct img_rgb_t *MainWindow::loadImageToImg_rgb_t(QString path)
+struct img_rgb_t *MainWindow::loadImageToImg_rgb(QString path)
 {
 	struct img_rgb_t *img = NULL;
 
