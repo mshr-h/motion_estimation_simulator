@@ -36,7 +36,7 @@ img_motion_estimation(
 		   result_fullsearch_4bit_4pix_dynamic*100.0/result_fullsearch_8bit,
 		   result_fullsearch_4bit_4pix_dynamic);
 
-	int result_fullsearch_4bit_4pix_proposed = fullsearch_4bit_4pix_proposed(
+	int result_fullsearch_4bit_4pix_proposed = fullsearch_4bit_4pix_proposed1(
 				 prev_image,
 				 curr_image,
 				 tb_size,

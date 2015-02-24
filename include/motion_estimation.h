@@ -26,7 +26,7 @@ fullsearch_4bit_4pix_dynamic(
 );
 
 int
-fullsearch_4bit_4pix_proposed(
+fullsearch_4bit_4pix_proposed1(
 	struct img_yuv_t *prev_image,
 	struct img_yuv_t *curr_image,
 	int tb_size,
