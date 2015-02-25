@@ -13,22 +13,29 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-				mainwindow.cpp \
+	mainwindow.cpp \
 	motion_estimation.cpp \
 	QImage_to_img_rgb.cpp \
 	img_motion_estimation.c \
-	implab.c \
-	fullsearch_8bit.c \
-	fullsearch_4bit_4pix.c \
-	fullsearch_4bit_4pix_dynamic.c \
-	fullsearch_4bit_4pix_proposed1.c \
-	fullsearch_4bit_4pix_proposed2.c
+	implab/img_create.c \
+	implab/img_destruct.c \
+	implab/img_copy.c \
+	implab/img_rgb_create.c \
+	implab/img_rgb_destruct.c \
+	implab/img_yuv_create.c \
+	implab/img_yuv_destruct.c \
+	implab/base/Malloc2D_uchr.c \
+	search_method/fullsearch_4pix.c \
+	search_method/fullsearch.c \
+	processor_element/processor_element.c
 
 HEADERS  += mainwindow.h \
 	include/implab.h \
 	include/mainwindow.h \
 	include/windows.h \
-	include/motion_estimation.h
+	include/motion_estimation.h \
+	include/search_method.h \
+	include/processor_element.h
 
 FORMS    += mainwindow.ui
 

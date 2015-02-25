@@ -10,46 +10,52 @@ img_motion_estimation(
 )
 {
 	int result_fullsearch_8bit =
-			fullsearch_8bit(prev_image,
-							curr_image,
-							tb_size,
-							sw_size);
+			fullsearch(prev_image,
+					   curr_image,
+					   tb_size,
+					   sw_size,
+					   pe_8bit);
+
 	printf("Fullsearch 8bit                : %.1f%% (%d)\n",
 		   result_fullsearch_8bit*100.0/result_fullsearch_8bit,
 		   result_fullsearch_8bit);
 
 	int result_fullsearch_4bit_4pix =
-			fullsearch_4bit_4pix(prev_image,
-								 curr_image,
-								 tb_size,
-								 sw_size);
+			fullsearch_4pix(prev_image,
+							curr_image,
+							tb_size,
+							sw_size,
+							pe_4bit);
 	printf("Fullsearch 4bit 4pix           : %.1f%% (%d)\n",
 		   result_fullsearch_4bit_4pix*100.0/result_fullsearch_8bit,
 		   result_fullsearch_4bit_4pix);
 
 	int result_fullsearch_4bit_4pix_dynamic =
-			fullsearch_4bit_4pix_dynamic(prev_image,
-										 curr_image,
-										 tb_size,
-										 sw_size);
+			fullsearch_4pix(prev_image,
+							curr_image,
+							tb_size,
+							sw_size,
+							pe_dynamic_4bit);
 	printf("Fullsearch 4bit 4pix dynamic   : %.1f%% (%d)\n",
 		   result_fullsearch_4bit_4pix_dynamic*100.0/result_fullsearch_8bit,
 		   result_fullsearch_4bit_4pix_dynamic);
 
 	int result_fullsearch_4bit_4pix_proposed1 =
-			fullsearch_4bit_4pix_proposed1(prev_image,
-										   curr_image,
-										   tb_size,
-										   sw_size);
+			fullsearch_4pix(prev_image,
+							curr_image,
+							tb_size,
+							sw_size,
+							pe_4bit_proposed1);
 	printf("Fullsearch 4bit 4pix proposed 1: %.1f%% (%d)\n",
 		   result_fullsearch_4bit_4pix_proposed1*100.0/result_fullsearch_8bit,
 		   result_fullsearch_4bit_4pix_proposed1);
 
 	int result_fullsearch_4bit_4pix_proposed2 =
-			fullsearch_4bit_4pix_proposed2(prev_image,
-										   curr_image,
-										   tb_size,
-										   sw_size);
+			fullsearch_4pix(prev_image,
+							curr_image,
+							tb_size,
+							sw_size,
+							pe_4bit_proposed2);
 	printf("Fullsearch 4bit 4pix proposed 2: %.1f%% (%d)\n",
 		   result_fullsearch_4bit_4pix_proposed2*100.0/result_fullsearch_8bit,
 		   result_fullsearch_4bit_4pix_proposed2);

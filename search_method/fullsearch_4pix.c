@@ -1,47 +1,13 @@
 #include "include/implab.h"
 #include "include/motion_estimation.h"
 
-/*
- * 6bit operation
- *    8bit    7bit
- *   match   match {[8:5], 2'b00}     ; << 0
- *   match unmatch {[8:5], 2'b00}     ; << 1
- * unmatch   match {1'b0, [7:4], 1'b0}; << 2
- * unmatch unmatch {2'b00, [6:3]}     ; << 2
- */
-
-static int
-pe(
-	int pel_tb,
-	int pel_sw
-)
-{
-	int shift;          // shift amount
-	int upperbits = ((pel_sw ^ pel_tb) >> 6) & 0x3;
-	switch (upperbits) {
-		case 0: shift = 2; break; //   match   match
-		case 1: shift = 3; break; //   match unmatch
-		case 2: shift = 4; break; // unmatch   match
-		case 3: shift = 4; break; // unmatch unmatch
-		default:
-			fprintf(stdout, "error occured!\n");
-			fflush(stdout);
-			exit(1);
-	}
-	pel_sw = pel_sw >> shift;
-	pel_tb = pel_tb >> shift;
-
-	int diff = abs(pel_sw - pel_tb);
-
-	return diff << (shift - 2);
-}
-
 int
-fullsearch_4bit_4pix_proposed1(
+fullsearch_4pix(
 	struct img_t *prev_image,
 	struct img_t *curr_image,
 	int tb_size,
-	int sw_size
+	int sw_size,
+	int (*pe)(int , int)
 )
 {
 	struct pix_t min_p; // position of minimum SAD (-16 .. +16, -1 .. +1)

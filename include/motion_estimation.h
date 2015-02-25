@@ -1,4 +1,6 @@
 #include "include/implab.h"
+#include "include/processor_element.h"
+#include "include/search_method.h"
 #define MAX_SAD (255*16*16)
 
 int
@@ -33,6 +35,7 @@ fullsearch_4bit_4pix_proposed1(
 	int sw_size
 );
 
+int
 fullsearch_4bit_4pix_proposed2(
 	struct img_t *prev_image,
 	struct img_t *curr_image,

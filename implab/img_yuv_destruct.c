@@ -1,6 +1,5 @@
-#include  "include/dehaze.h"
+#include  "include/implab.h"
 
-//-------------------------------
 void
 img_yuv_destruct(
 	struct img_yuv_t *img
