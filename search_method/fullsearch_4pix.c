@@ -22,9 +22,6 @@ fullsearch_4pix(
 	int sum_min_sad;
 	int average;        // average of SAD
 
-	unsigned char **pimg = prev_image->data; // previous frame
-	unsigned char **cimg = curr_image->data; // current  frame
-
 	sum_min_sad = 0;
 	blcks = 0;
 	for(mb_p.h=tb_size; mb_p.h<(prev_image->ht-tb_size); mb_p.h+=tb_size) {
@@ -33,13 +30,13 @@ fullsearch_4pix(
 			min_sad = MAX_SAD;
 			for(sw_p.w=-tb_size; sw_p.w<=tb_size; sw_p.w+=2) {
 				for(sw_p.h=-tb_size; sw_p.h<=tb_size; sw_p.h+=2) {
-					if(mb_p.h+sw_p.h>=1064)
+					if((mb_p.h+sw_p.h)>=1064)
 						continue;
 					sad = 0;
 					for(tmp_p.h=0; tmp_p.h<tb_size; tmp_p.h++) {
 						for(tmp_p.w=0; tmp_p.w<tb_size; tmp_p.w++) {
-							pel_sw = cimg[mb_p.h+sw_p.h+tmp_p.h][mb_p.w+sw_p.w+tmp_p.w];
-							pel_tb = pimg[mb_p.h+tmp_p.h][mb_p.w+tmp_p.w];
+							pel_sw = curr_image->data[mb_p.h+sw_p.h+tmp_p.h][mb_p.w+sw_p.w+tmp_p.w];
+							pel_tb = prev_image->data[mb_p.h+tmp_p.h][mb_p.w+tmp_p.w];
 							sad += pe(pel_tb, pel_sw);
 						}
 					}
@@ -69,8 +66,8 @@ fullsearch_4pix(
 					sad = 0;
 					for(tmp_p.h=0; tmp_p.h<tb_size; tmp_p.h++) {
 						for(tmp_p.w=0; tmp_p.w<tb_size; tmp_p.w++) {
-							pel_sw = cimg[mb_p.h+min_p.h+sw_p.h+tmp_p.h][mb_p.w+min_p.w+sw_p.w+tmp_p.w];
-							pel_tb = pimg[mb_p.h+tmp_p.h][mb_p.w+tmp_p.w];
+							pel_sw = curr_image->data[mb_p.h+min_p.h+sw_p.h+tmp_p.h][mb_p.w+min_p.w+sw_p.w+tmp_p.w];
+							pel_tb = prev_image->data[mb_p.h+tmp_p.h][mb_p.w+tmp_p.w];
 							sad += abs(pel_sw - pel_tb);
 						}
 					}
