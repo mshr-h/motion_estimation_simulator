@@ -10,7 +10,7 @@ extern QImage outImg;
 void MainWindow::motionEstimation()
 {
 	int tb_size = 16;
-	int sw_size = 48;
+	int sw_range = 16; // -16, ..., +16
 
 	QStringList testcase;
 	testcase.append("blue_sky");
@@ -51,7 +51,7 @@ void MainWindow::motionEstimation()
 
 		printf("Case %d: %s\n", i+1, qPrintable(testcase.at(i)));
 
-		img_motion_estimation(cimg, pimg, tb_size, sw_size);
+		img_motion_estimation(cimg, pimg, tb_size, sw_range);
 
 		img_destruct(cimg);
 		img_destruct(pimg);
@@ -86,7 +86,7 @@ void MainWindow::motionEstimation()
 
 		printf("Case %d: %s\n", i+1, qPrintable(testcase.at(i)));
 
-		img_motion_estimation(cimg, pimg, tb_size, sw_size);
+		img_motion_estimation(cimg, pimg, tb_size, sw_range);
 
 		img_destruct(cimg);
 		img_destruct(pimg);

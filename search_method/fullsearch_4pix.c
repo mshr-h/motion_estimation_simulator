@@ -6,7 +6,7 @@ fullsearch_4pix(
 	struct img_t *prev_image,
 	struct img_t *curr_image,
 	int tb_size,
-	int sw_size,
+	int sw_range,
 	int (*pe)(int , int)
 )
 {
@@ -28,6 +28,8 @@ fullsearch_4pix(
 		for(mb_p.w=tb_size; mb_p.w<(prev_image->wt-tb_size); mb_p.w+=tb_size) {
 			/* Double Motion Estimation start */
 			min_sad = MAX_SAD;
+			min_p.h = -tb_size;
+			min_p.w = -tb_size;
 			for(sw_p.w=-tb_size; sw_p.w<=tb_size; sw_p.w+=2) {
 				for(sw_p.h=-tb_size; sw_p.h<=tb_size; sw_p.h+=2) {
 					if((mb_p.h+sw_p.h)>=1064)
