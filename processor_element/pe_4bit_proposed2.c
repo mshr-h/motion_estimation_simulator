@@ -1,5 +1,6 @@
 #include "include/implab.h"
 #include "include/motion_estimation.h"
+#include <assert.h>
 
 /*
  * 5bit operation
@@ -31,8 +32,12 @@ pe_4bit_proposed2(
 			fflush(stdout);
 			exit(1);
 	}
-	pel_sw = pel_sw >> shift;
-	pel_tb = pel_tb >> shift;
+	pel_sw = (pel_sw >> shift) & 0xf;
+	pel_tb = (pel_tb >> shift) & 0xf;
+	assert(pel_sw >= 0);
+	assert(pel_sw <= 15);
+	assert(pel_tb >= 0);
+	assert(pel_tb <= 15);
 
 	int diff = abs(pel_sw - pel_tb);
 
