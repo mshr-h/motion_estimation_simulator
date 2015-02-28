@@ -11,7 +11,7 @@ pe_4bit(
 );
 
 int
-pe_dynamic_4bit(
+pe_4bit_dynamic(
 	int pel_tb,
 	int pel_sw
 );

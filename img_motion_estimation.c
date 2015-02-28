@@ -35,7 +35,7 @@ img_motion_estimation(
 							curr_image,
 							tb_size,
 							sw_range,
-							pe_dynamic_4bit);
+							pe_4bit_dynamic);
 	printf("Fullsearch 4bit 4pix dynamic   : %.1f%% (%d)\n",
 		   result_fullsearch_4bit_4pix_dynamic*100.0/result_fullsearch_8bit,
 		   result_fullsearch_4bit_4pix_dynamic);
