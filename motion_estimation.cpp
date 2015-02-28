@@ -49,7 +49,7 @@ void MainWindow::motionEstimation()
 			return;
 		}
 
-		printf("Case %d: %s\n", i+1, qPrintable(testcase.at(i)));
+		printf("Case%d: %s\n", i+1, qPrintable(testcase.at(i)));
 
 		img_motion_estimation(cimg, pimg, tb_size, sw_range);
 
@@ -84,7 +84,7 @@ void MainWindow::motionEstimation()
 			return;
 		}
 
-		printf("Case %d: %s\n", i+1, qPrintable(testcase.at(i)));
+		printf("Case%d: %s\n", i+1, qPrintable(testcase.at(i)));
 
 		img_motion_estimation(cimg, pimg, tb_size, sw_range);
 
