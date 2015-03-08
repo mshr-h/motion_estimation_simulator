@@ -15,10 +15,19 @@ img_motion_estimation(
 					   tb_size,
 					   sw_range,
 					   pe_8bit);
-
 	printf("Fullsearch 8bit                : %.1f%% (%d)\n",
 		   result_fullsearch_8bit*100.0/result_fullsearch_8bit,
 		   result_fullsearch_8bit);
+
+	int result_fullsearch_8bit_xor =
+			fullsearch(prev_image,
+					   curr_image,
+					   tb_size,
+					   sw_range,
+					   pe_8bit_xor);
+	printf("Fullsearch 8bit xor            : %.1f%% (%d)\n",
+		   result_fullsearch_8bit_xor*100.0/result_fullsearch_8bit,
+		   result_fullsearch_8bit_xor);
 
 	int result_fullsearch_4bit_4pix =
 			fullsearch_4pix(prev_image,
@@ -59,6 +68,56 @@ img_motion_estimation(
 	printf("Fullsearch 4bit 4pix proposed 2: %.1f%% (%d)\n",
 		   result_fullsearch_4bit_4pix_proposed2*100.0/result_fullsearch_8bit,
 		   result_fullsearch_4bit_4pix_proposed2);
+
+	int result_fullsearch_4bit_4pix_xor =
+			fullsearch_4pix(prev_image,
+							curr_image,
+							tb_size,
+							sw_range,
+							pe_4bit_xor);
+	printf("Fullsearch 4bit 4pix xor       : %.1f%% (%d)\n",
+		   result_fullsearch_4bit_4pix_xor*100.0/result_fullsearch_8bit,
+		   result_fullsearch_4bit_4pix_xor);
+
+	int result_fullsearch_5bit_4pix_xor =
+			fullsearch_4pix(prev_image,
+							curr_image,
+							tb_size,
+							sw_range,
+							pe_5bit_xor);
+	printf("Fullsearch 5bit 4pix xor       : %.1f%% (%d)\n",
+		   result_fullsearch_5bit_4pix_xor*100.0/result_fullsearch_8bit,
+		   result_fullsearch_5bit_4pix_xor);
+
+	int result_fullsearch_6bit_4pix_xor =
+			fullsearch_4pix(prev_image,
+							curr_image,
+							tb_size,
+							sw_range,
+							pe_6bit_xor);
+	printf("Fullsearch 6bit 4pix xor       : %.1f%% (%d)\n",
+		   result_fullsearch_6bit_4pix_xor*100.0/result_fullsearch_8bit,
+		   result_fullsearch_6bit_4pix_xor);
+
+	int result_fullsearch_7bit_4pix_xor =
+			fullsearch_4pix(prev_image,
+							curr_image,
+							tb_size,
+							sw_range,
+							pe_7bit_xor);
+	printf("Fullsearch 7bit 4pix xor       : %.1f%% (%d)\n",
+		   result_fullsearch_7bit_4pix_xor*100.0/result_fullsearch_8bit,
+		   result_fullsearch_7bit_4pix_xor);
+
+	int result_fullsearch_8bit_4pix_xor =
+			fullsearch_4pix(prev_image,
+							curr_image,
+							tb_size,
+							sw_range,
+							pe_8bit_xor);
+	printf("Fullsearch 8bit 4pix xor       : %.1f%% (%d)\n",
+		   result_fullsearch_8bit_4pix_xor*100.0/result_fullsearch_8bit,
+		   result_fullsearch_8bit_4pix_xor);
 
 	fflush(stdout);
 }

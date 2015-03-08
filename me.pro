@@ -27,11 +27,11 @@ SOURCES += main.cpp\
            implab/base/Malloc2D_uchr.c \
            search_method/fullsearch_4pix.c \
            search_method/fullsearch.c \
-           processor_element/pe_8bit.c \
-           processor_element/pe_4bit.c \
            processor_element/pe_4bit_proposed1.c \
            processor_element/pe_4bit_proposed2.c \
-           processor_element/pe_4bit_dynamic.c
+           processor_element/pe_4bit_dynamic.c \
+           processor_element/pe_Nbit.c \
+           processor_element/pe_Nbit_xor.c
 
 HEADERS  += mainwindow.h \
 	include/implab.h \
