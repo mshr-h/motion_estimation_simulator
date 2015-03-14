@@ -69,6 +69,36 @@ img_motion_estimation(
 		   result_fullsearch_4bit_4pix_proposed2*100.0/result_fullsearch_8bit,
 		   result_fullsearch_4bit_4pix_proposed2);
 
+	int result_fullsearch_1bit_4pix_xor =
+			fullsearch_4pix(prev_image,
+							curr_image,
+							tb_size,
+							sw_range,
+							pe_1bit_xor);
+	printf("Fullsearch 1bit 4pix xor       : %.1f%% (%d)\n",
+		   result_fullsearch_1bit_4pix_xor*100.0/result_fullsearch_8bit,
+		   result_fullsearch_1bit_4pix_xor);
+
+	int result_fullsearch_2bit_4pix_xor =
+			fullsearch_4pix(prev_image,
+							curr_image,
+							tb_size,
+							sw_range,
+							pe_2bit_xor);
+	printf("Fullsearch 2bit 4pix xor       : %.1f%% (%d)\n",
+		   result_fullsearch_2bit_4pix_xor*100.0/result_fullsearch_8bit,
+		   result_fullsearch_2bit_4pix_xor);
+
+	int result_fullsearch_3bit_4pix_xor =
+			fullsearch_4pix(prev_image,
+							curr_image,
+							tb_size,
+							sw_range,
+							pe_3bit_xor);
+	printf("Fullsearch 3bit 4pix xor       : %.1f%% (%d)\n",
+		   result_fullsearch_3bit_4pix_xor*100.0/result_fullsearch_8bit,
+		   result_fullsearch_3bit_4pix_xor);
+
 	int result_fullsearch_4bit_4pix_xor =
 			fullsearch_4pix(prev_image,
 							curr_image,

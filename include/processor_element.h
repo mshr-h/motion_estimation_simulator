@@ -29,6 +29,24 @@ pe_4bit_proposed2(
 );
 
 int
+pe_1bit_xor(
+    int pel_tb,
+    int pel_sw
+);
+
+int
+pe_2bit_xor(
+    int pel_tb,
+    int pel_sw
+);
+
+int
+pe_3bit_xor(
+    int pel_tb,
+    int pel_sw
+);
+
+int
 pe_4bit_xor(
 	int pel_tb,
 	int pel_sw

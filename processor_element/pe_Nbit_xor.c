@@ -3,6 +3,54 @@
 #include <assert.h>
 
 int
+pe_1bit_xor(
+	int pel_tb,
+	int pel_sw
+)
+{
+	pel_sw = (pel_sw >> 7) & 0x01;
+	pel_tb = (pel_tb >> 7) & 0x01;
+	assert(pel_sw >= 0);
+	assert(pel_sw <= 1);
+	assert(pel_tb >= 0);
+	assert(pel_tb <= 1);
+
+	return (pel_sw ^ pel_tb);
+}
+
+int
+pe_2bit_xor(
+	int pel_tb,
+	int pel_sw
+)
+{
+	pel_sw = (pel_sw >> 6) & 0x03;
+	pel_tb = (pel_tb >> 6) & 0x03;
+	assert(pel_sw >= 0);
+	assert(pel_sw <= 3);
+	assert(pel_tb >= 0);
+	assert(pel_tb <= 3);
+
+	return (pel_sw ^ pel_tb);
+}
+
+int
+pe_3bit_xor(
+	int pel_tb,
+	int pel_sw
+)
+{
+	pel_sw = (pel_sw >> 5) & 0x07;
+	pel_tb = (pel_tb >> 5) & 0x07;
+	assert(pel_sw >= 0);
+	assert(pel_sw <= 7);
+	assert(pel_tb >= 0);
+	assert(pel_tb <= 15);
+
+	return (pel_sw ^ pel_tb);
+}
+
+int
 pe_4bit_xor(
 	int pel_tb,
 	int pel_sw
