@@ -28,7 +28,22 @@ void MainWindow::motionEstimation()
 
 	qDebug() << "currentPath:" << currentPath.absolutePath();
 	clock_t start = clock();
-	printf("grayscale image\n");
+
+	printf("grayscale\t");
+	printf("Fullsearch 8bit\t");
+	printf("Fullsearch 4bit 4pix\t");
+	printf("Fullsearch 4bit 4pix dynamic\t");
+	printf("Fullsearch 4bit 4pix proposed 1\t");
+	printf("Fullsearch 1bit 4pix xor\t");
+	printf("Fullsearch 2bit 4pix xor\t");
+	printf("Fullsearch 3bit 4pix xor\t");
+	printf("Fullsearch 4bit 4pix xor\t");
+	printf("Fullsearch 5bit 4pix xor\t");
+	printf("Fullsearch 6bit 4pix xor\t");
+	printf("Fullsearch 7bit 4pix xor\t");
+	printf("Fullsearch 8bit 4pix xor\n");
+	fflush(stdout);
+
 	for(int i = 0; i < testcase.length(); i++) {
 		QString currFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_0.png";
 		QString prevFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_1.png";
@@ -49,7 +64,7 @@ void MainWindow::motionEstimation()
 			return;
 		}
 
-		printf("Case%d: %s\n", i+1, qPrintable(testcase.at(i)));
+		printf("%s\t", qPrintable(testcase.at(i)));
 
 		img_motion_estimation(cimg, pimg, tb_size, sw_range);
 
@@ -63,7 +78,23 @@ void MainWindow::motionEstimation()
 
 	currentPath.cd("rgb");
 	qDebug() << "currentPath:" << currentPath.absolutePath();
-	printf("lumina channel of color images\n");
+	printf("lumina channel\t");
+	printf("Fullsearch 8bit\t");
+	printf("Fullsearch 8bit xor\t");
+	printf("Fullsearch 4bit 4pix\t");
+	printf("Fullsearch 4bit 4pix dynamic\t");
+	printf("Fullsearch 4bit 4pix proposed 1\t");
+	printf("Fullsearch 4bit 4pix proposed 2\t");
+	printf("Fullsearch 1bit 4pix xor\t");
+	printf("Fullsearch 2bit 4pix xor\t");
+	printf("Fullsearch 3bit 4pix xor\t");
+	printf("Fullsearch 4bit 4pix xor\t");
+	printf("Fullsearch 5bit 4pix xor\t");
+	printf("Fullsearch 6bit 4pix xor\t");
+	printf("Fullsearch 7bit 4pix xor\t");
+	printf("Fullsearch 8bit 4pix xor\n");
+	fflush(stdout);
+
 	for(int i = 0; i < testcase.length(); i++) {
 		QString currFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_0_rgb.png";
 		QString prevFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_1_rgb.png";
@@ -84,7 +115,7 @@ void MainWindow::motionEstimation()
 			return;
 		}
 
-		printf("Case%d: %s\n", i+1, qPrintable(testcase.at(i)));
+		printf("%s\t", qPrintable(testcase.at(i)));
 
 		img_motion_estimation(cimg, pimg, tb_size, sw_range);
 
