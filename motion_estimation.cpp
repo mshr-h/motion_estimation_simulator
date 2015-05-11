@@ -32,26 +32,8 @@ void MainWindow::motionEstimation()
 	printf("grayscale\t");
 	printf("Fullsearch 8bit\t");
 	printf("Fullsearch 4bit 4pix\t");
-	printf("Fullsearch 4bit 4pix dynamic\t");
-	printf("Fullsearch 4bit 4pix proposed 1\t");
-	printf("Fullsearch 1bit 4pix xor\t");
-	printf("Fullsearch 2bit 4pix xor\t");
-	printf("Fullsearch 3bit 4pix xor\t");
-	printf("Fullsearch 4bit 4pix xor\t");
-	printf("Fullsearch 5bit 4pix xor\t");
-	printf("Fullsearch 6bit 4pix xor\t");
-	printf("Fullsearch 7bit 4pix xor\t");
-	printf("Fullsearch 8bit 4pix xor\t");
-	printf("Fullsearch 5bit 4pix mix diff4 xor1\t");
-	printf("Fullsearch 6bit 4pix mix diff4 xor2\t");
-	printf("Fullsearch 7bit 4pix mix diff4 xor3\t");
-	printf("Fullsearch 8bit 4pix mix diff1 xor7\t");
-	printf("Fullsearch 8bit 4pix mix diff2 xor6\t");
-	printf("Fullsearch 8bit 4pix mix diff3 xor5\t");
-	printf("Fullsearch 8bit 4pix mix diff4 xor4\t");
-	printf("Fullsearch 8bit 4pix mix diff5 xor3\t");
-	printf("Fullsearch 8bit 4pix mix diff6 xor2\t");
-	printf("Fullsearch 8bit 4pix mix diff7 xor1\n");
+    printf("Fullsearch 4bit 4pix dynamic\t");
+    printf("Fullsearch 8bit 4pix mix diff4 xor4\n");
 	fflush(stdout);
 
 	for(int i = 0; i < testcase.length(); i++) {
