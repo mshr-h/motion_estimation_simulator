@@ -9,8 +9,8 @@ extern QImage outImg;
 
 void MainWindow::motionEstimation()
 {
-	int tb_size = 16;
-	int sw_range = 16; // -16, ..., +16
+	int size_tb = 16;
+	int range_sw = 16; // -16, ..., +16
 
 	QStringList testcase;
 	testcase.append("blue_sky");
@@ -21,6 +21,7 @@ void MainWindow::motionEstimation()
 	testcase.append("sunflower");
 	testcase.append("tractor");
 
+	// change current path to inImg_db directory
 	QDir currentPath = QDir::currentPath();
 	currentPath.cdUp();
 	currentPath.cd("motion_estimation");
@@ -32,8 +33,8 @@ void MainWindow::motionEstimation()
 	printf("grayscale\t");
 	printf("Fullsearch 8bit\t");
 	printf("Fullsearch 4bit 4pix\t");
-    printf("Fullsearch 4bit 4pix dynamic\t");
-    printf("Fullsearch 8bit 4pix mix diff4 xor4\n");
+	printf("Fullsearch 4bit 4pix dynamic\t");
+	printf("Fullsearch 8bit 4pix mix diff4 xor4\n");
 	fflush(stdout);
 
 	for(int i = 0; i < testcase.length(); i++) {
@@ -58,7 +59,7 @@ void MainWindow::motionEstimation()
 
 		printf("%s\t", qPrintable(testcase.at(i)));
 
-		img_motion_estimation(cimg, pimg, tb_size, sw_range);
+		img_motion_estimation(cimg, pimg, size_tb, range_sw);
 
 		img_destruct(cimg);
 		img_destruct(pimg);

@@ -39,8 +39,8 @@ void
 img_motion_estimation(
 	struct img_t *curr_image,
 	struct img_t *prev_image,
-	int tb_size,
-	int sw_range
+	int size_tb,
+	int range_sw
 );
 struct img_t *
 img_create(

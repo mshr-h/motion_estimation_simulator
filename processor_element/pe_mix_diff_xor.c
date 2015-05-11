@@ -208,8 +208,8 @@ pe_mix_diff4_xor4(
 {
 	int pel_sw_u = (pel_sw >> 4) & 0x0f; // upperbit
 	int pel_tb_u = (pel_tb >> 4) & 0x0f; // upperbit
-	int pel_sw_l = pel_sw & 0x0f; // lowerbit
-	int pel_tb_l = pel_tb & 0x0f; // lowerbit
+	int pel_sw_l = pel_sw & 0x0f;        // lowerbit
+	int pel_tb_l = pel_tb & 0x0f;        // lowerbit
 	assert(pel_sw_u >= 0);
 	assert(pel_sw_u <= 15);
 	assert(pel_tb_u >= 0);

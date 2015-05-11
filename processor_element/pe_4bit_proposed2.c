@@ -4,7 +4,7 @@
 
 /*
  * 5bit operation
- *    8bit    7bit
+ *	8bit	7bit
  *   match   match {[8:5], 1'b0}
  *   match unmatch {[8:5], 1'b0}
  * unmatch   match {1'b0, [7:4]}
@@ -17,7 +17,7 @@ pe_4bit_proposed2(
 	int pel_sw
 )
 {
-	int shift;          // shift amount
+	int shift;  // shift amount
 	int upperbits = ((pel_sw ^ pel_tb) >> 6) & 0x3;
 	switch (upperbits) {
 		case 0: shift = 2; break; //   match   match
