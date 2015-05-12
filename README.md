@@ -29,7 +29,7 @@ Each contains image name and average sum of absolute difference(SAD).
 ### Prefix
 #### prev
 *prev* means previous.  
-`prev_image`,
+`prev_image`
 
 #### curr
 *curr* means current.  
@@ -42,11 +42,11 @@ Each contains image name and average sum of absolute difference(SAD).
 ### Suffix
 #### tb
 *tb* means template block.  
-`pel_tb`, `size_sw`
+`pel_tb`, `size_tb`
 
 #### sw
 *sw* means search window.  
-`pel_sw`, `size_tb`
+`pel_sw`, `size_sw`
 
 ### Function Prototype
 #### Processor Element
