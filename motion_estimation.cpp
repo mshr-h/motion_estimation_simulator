@@ -30,24 +30,22 @@ void MainWindow::motionEstimation()
     qDebug() << "currentPath:" << currentPath.absolutePath();
     clock_t start = clock();
 
-    printf("grayscale\t");
-    printf("Fullsearch 8bit\t");
-    printf("Fullsearch 4bit 4pix\t");
-    printf("Fullsearch 4bit 4pix dynamic\t");
-    printf("Fullsearch 8bit 4pix mix diff4 xor4\n");
+    printf("luminance\t");
+    printf("8bit 1pix\t");
+    printf("4bit 4pix\t");
+    printf("8bit 4pix diff2 xor6\t");
+    printf("8bit 4pix diff3 xor5\t");
+    printf("8bit 4pix diff4 xor4\t");
+    printf("8bit 4pix diff5 xor3\t");
+    printf("8bit 4pix diff6 xor2\n");
     fflush(stdout);
 
     for(int i = 0; i < testcase.length(); i++) {
         QString currFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_0.png";
         QString prevFileName = currentPath.absolutePath() + QDir::separator() + testcase.at(i) + "_1.png";
 
-        struct img_rgb_t *curr_img_rgb = loadImageToImg_rgb(currFileName);
-        struct img_rgb_t *prev_img_rgb = loadImageToImg_rgb(prevFileName);
-
-        struct img_yuv_t *curr_img_yuv = img_rgb_to_yuv(curr_img_rgb);
-        struct img_yuv_t *prev_img_yuv = img_rgb_to_yuv(prev_img_rgb);
-        img_rgb_destruct(curr_img_rgb);
-        img_rgb_destruct(prev_img_rgb);
+        struct img_yuv_t *curr_img_yuv = loadImageToImg_yuv(currFileName);
+        struct img_yuv_t *prev_img_yuv = loadImageToImg_yuv(prevFileName);
 
         struct img_t *cimg = img_copy(curr_img_yuv->wt, curr_img_yuv->ht, curr_img_yuv->y);
         struct img_t *pimg = img_copy(prev_img_yuv->wt, prev_img_yuv->ht, prev_img_yuv->y);
@@ -72,9 +70,9 @@ void MainWindow::motionEstimation()
     qDebug() << "elapsed:" << (double)(clock()-start)/CLOCKS_PER_SEC << "sec";
 }
 
-struct img_rgb_t *MainWindow::loadImageToImg_rgb(QString path)
+struct img_yuv_t *MainWindow::loadImageToImg_yuv(QString path)
 {
-    struct img_rgb_t *img = NULL;
+    struct img_rgb_t *img_rgb = NULL;
 
     if (!path.isEmpty()) {
         QImage Qimg(path);
@@ -85,8 +83,11 @@ struct img_rgb_t *MainWindow::loadImageToImg_rgb(QString path)
             return NULL;
         }
 
-        img=QImage_to_img_rgb(&Qimg);
+        img_rgb=QImage_to_img_rgb(&Qimg);
     }
 
-    return img;
+    struct img_yuv_t *img_yuv = img_rgb_to_yuv(img_rgb);
+    img_rgb_destruct(img_rgb);
+
+    return img_yuv;
 }

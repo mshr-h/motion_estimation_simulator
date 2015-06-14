@@ -15,7 +15,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void motionEstimation();
-    struct img_rgb_t *loadImageToImg_rgb(QString path);
+    struct img_yuv_t *loadImageToImg_yuv(QString path);
 
 private:
     Ui::MainWindow *ui;
