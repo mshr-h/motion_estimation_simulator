@@ -4,21 +4,21 @@
 #include <QMainWindow>
 
 namespace Ui {
-	class MainWindow;
+class MainWindow;
 }
 
 class MainWindow : public QMainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit MainWindow(QWidget *parent = 0);
-	~MainWindow();
-	void motionEstimation();
-	struct img_rgb_t *loadImageToImg_rgb(QString path);
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
+    void motionEstimation();
+    struct img_rgb_t *loadImageToImg_rgb(QString path);
 
 private:
-	Ui::MainWindow *ui;
+    Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H

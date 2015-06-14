@@ -7,7 +7,7 @@
 
 // C++ functions
 struct img_rgb_t *
-QImage_to_img_rgb(
-	QImage *inImg
-);
+        QImage_to_img_rgb(
+        QImage *inImg
+        );
 #endif // WINDOWS_H
