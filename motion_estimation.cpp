@@ -46,11 +46,15 @@ void MainWindow::motionEstimation()
 
 		struct img_yuv_t *curr_img_yuv = img_rgb_to_yuv(curr_img_rgb);
 		struct img_yuv_t *prev_img_yuv = img_rgb_to_yuv(prev_img_rgb);
+        img_rgb_destruct(curr_img_rgb);
+        img_rgb_destruct(prev_img_rgb);
 
-		struct img_t *cimg = img_copy(curr_img_rgb->wt, curr_img_rgb->ht, curr_img_rgb->r);
-		struct img_t *pimg = img_copy(prev_img_rgb->wt, prev_img_rgb->ht, prev_img_rgb->r);
+        struct img_t *cimg = img_copy(curr_img_yuv->wt, curr_img_yuv->ht, curr_img_yuv->y);
+        struct img_t *pimg = img_copy(prev_img_yuv->wt, prev_img_yuv->ht, prev_img_yuv->y);
+        img_yuv_destruct(curr_img_yuv);
+        img_yuv_destruct(prev_img_yuv);
 
-		if(prev_img_rgb->ht != curr_img_rgb->ht && prev_img_rgb->wt != curr_img_rgb->wt) {
+        if(pimg->ht != cimg->ht && pimg->wt != cimg->wt) {
 			QMessageBox::information(this,
 									 tr("Main Viewer"),
 									 tr("Image size don't match"));
@@ -63,10 +67,6 @@ void MainWindow::motionEstimation()
 
 		img_destruct(cimg);
 		img_destruct(pimg);
-		img_rgb_destruct(curr_img_rgb);
-		img_rgb_destruct(prev_img_rgb);
-		img_yuv_destruct(curr_img_yuv);
-		img_yuv_destruct(prev_img_yuv);
 	}
 
 	qDebug() << "elapsed:" << (double)(clock()-start)/CLOCKS_PER_SEC << "sec";
