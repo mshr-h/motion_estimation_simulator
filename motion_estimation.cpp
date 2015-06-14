@@ -33,11 +33,13 @@ void MainWindow::motionEstimation()
     printf("luminance\t");
     printf("8bit 1pix\t");
     printf("4bit 4pix\t");
-    printf("8bit 4pix diff2 xor6\t");
-    printf("8bit 4pix diff3 xor5\t");
-    printf("8bit 4pix diff4 xor4\t");
-    printf("8bit 4pix diff5 xor3\t");
-    printf("8bit 4pix diff6 xor2\n");
+    printf("8bit 4pix diff1 exor7\t");
+    printf("8bit 4pix diff2 exor6\t");
+    printf("8bit 4pix diff3 exor5\t");
+    printf("8bit 4pix diff4 exor4\t");
+    printf("8bit 4pix diff5 exor3\t");
+    printf("8bit 4pix diff6 exor2\t");
+    printf("8bit 4pix diff7 exor1\n");
     fflush(stdout);
 
     for(int i = 0; i < testcase.length(); i++) {
