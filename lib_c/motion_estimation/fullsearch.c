@@ -3,7 +3,6 @@
 void fullsearch(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char))
 {
     int h,w,lh,lw; // loop variables
-    int mv_table_h, mv_table_w; // size of motion vector table
     unsigned char curr_pix; // pixel value of current frame
     unsigned char prev_pix; // pixel value of previous frame
     struct mvec_t cand_mvec; // candidate motion vector
@@ -11,20 +10,6 @@ void fullsearch(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, 
 
     int sw_range=me_block->sw_range;
     int tb_size=me_block->tb_size;
-
-    mv_table_h=0;
-    for(h=sw_range; (h+tb_size+sw_range)<me_block->curr_frame->ht; h+=tb_size)
-    {
-        mv_table_h++;
-    }
-
-    mv_table_w=0;
-    for(w=sw_range; (w+tb_size+sw_range)<me_block->curr_frame->wt; w+=tb_size)
-    {
-        mv_table_w++;
-    }
-
-    me_block->mvec_table=mvec_table_craete(mv_table_h, mv_table_w);
 
     for(h=0; h<me_block->mvec_table->ht; h++)
     {
