@@ -1,137 +1,26 @@
-int
-pe_8bit(
-        int pel_tb,
-        int pel_sw
-        );
+#ifndef PROCESSOR_ELEMENT_H
+#define PROCESSOR_ELEMENT_H
+#include <assert.h>
+#include <math.h>
 
-int
-pe_4bit(
-        int pel_tb,
-        int pel_sw
-        );
+#ifdef __cplusplus
+extern "C" {
+#endif
+unsigned char pe_1bit_diff(unsigned char a, unsigned char b);
+unsigned char pe_2bit_diff(unsigned char a, unsigned char b);
+unsigned char pe_3bit_diff(unsigned char a, unsigned char b);
+unsigned char pe_4bit_diff(unsigned char a, unsigned char b);
+unsigned char pe_5bit_diff(unsigned char a, unsigned char b);
+unsigned char pe_6bit_diff(unsigned char a, unsigned char b);
+unsigned char pe_7bit_diff(unsigned char a, unsigned char b);
+unsigned char pe_8bit_diff(unsigned char a, unsigned char b);
+unsigned char pe_2bit_diff_6bit_exor(unsigned char a, unsigned char b);
+unsigned char pe_3bit_diff_5bit_exor(unsigned char a, unsigned char b);
+unsigned char pe_4bit_diff_4bit_exor(unsigned char a, unsigned char b);
+unsigned char pe_5bit_diff_3bit_exor(unsigned char a, unsigned char b);
+unsigned char pe_6bit_diff_2bit_exor(unsigned char a, unsigned char b);
+#ifdef __cplusplus
+}
+#endif
 
-int
-pe_4bit_dynamic(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_4bit_proposed1(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_4bit_proposed2(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_1bit_xor(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_2bit_xor(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_3bit_xor(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_4bit_xor(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_5bit_xor(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_6bit_xor(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_7bit_xor(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_8bit_xor(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_mix_diff4_xor1(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_mix_diff4_xor2(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_mix_diff4_xor3(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_mix_diff1_xor7(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_mix_diff2_xor6(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_mix_diff3_xor5(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_mix_diff4_xor4(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_mix_diff5_xor3(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_mix_diff6_xor2(
-        int pel_tb,
-        int pel_sw
-        );
-
-int
-pe_mix_diff7_xor1(
-        int pel_tb,
-        int pel_sw
-        );
+#endif // PROCESSOR_ELEMENT_H

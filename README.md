@@ -7,63 +7,32 @@ This is a simulation program for motion estimation.
 * Qt for MinGW (>=5.4)
 
 ## Compile
-1. Open **me.pro**.
+1. Open **motion_estimation.pro**.
 2. Run. (Ctrl+R)
 
-## Example output
-    grayscale	Fullsearch 8bit	Fullsearch 4bit 4pix
-    blue_sky	566	646
-    pedestrian_area	1106	1176
-    riverbed	2544	2585
-    rush_hour	702	778
-    station2	612	661
-    sunflower	505	566
-    tractor	1021	1071
-
-## Output
-All line of output is formatted tab-separated values.
-The first line of the output gives search method.
-Each contains image name and average sum of absolute difference(SAD).
-
 ## Code reading
-### Prefix
+### Structures
+*mvec_t*--
+motion vector
+
+*mvec_table_t*--
+table of motion vector
+
+*me_block_t*--
+motion estimation block
+
+### Prefixies
 #### prev
 *prev* means previous.  
-`prev_image`
+`prev_frame`
 
 #### curr
 *curr* means current.  
-`curr_image`
+`curr_frame`
 
-#### pel
-*pel* means pixel.  
-`pel_tb`, `pel_sw`
-
-### Suffix
-#### tb
-*tb* means template block.  
-`pel_tb`, `size_tb`
-
-#### sw
-*sw* means search window.  
-`pel_sw`, `size_sw`
-
-### Function Prototype
-#### Processor Element
-This function takes two pixel values and returns difference of those pixels.
-    int
-    pe_8bit(
-      int pel_tb,
-      int pel_sw
-    );
-
-#### Search method
-This function takes two pointer to the image, size of template block, size of search range and function pointer to processor element and returns average SAD.
+### Function Prototypes
+This function takes a pointer to *struct me_block_t*. This function computes motion vectors.
     int
     fullsearch(
-      struct img_t *prev_image, //  pointer to previous frame
-      struct img_t *curr_image, //  pointer to current frame
-      int tb_size,              // size of template block
-      int sw_range,             // size of search range
-      int (*pe)(int , int)      // function pointer to processor element
+      struct me_block_t *me_block // pointer to motion estimation block
     );
