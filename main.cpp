@@ -37,9 +37,9 @@ int main(int argc, char *argv[])
     unsigned char *frame_buf=(unsigned char *)malloc(sizeof(unsigned char)*frame_bytes);
     fread(frame_buf, 1, frame_bytes, fp_in);
     buf_to_img_yuv(frame_buf,frame_prev);
-
-    printf("%s\n",argv[1]);
-    printf("5bit_diff\n");
+    printf("%s\tsize:%dx%d\n", argv[1], width, height);
+    printf("fullsearch\tpe_8bit_diff\n");
+    printf("ave_sad\tframe#\ttotal_frame:%ld\n",filesize/frame_bytes);
 
     while(frame_bytes==fread(frame_buf, 1, frame_bytes, fp_in))
     {
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
         struct img_t *img_curr=img_copy(width,height,frame->y);
         struct img_t *img_prev=img_copy(width,height,frame_prev->y);
         auto me_block=me_block_create(img_curr,img_prev,16,16);
-        fullsearch(me_block,pe_5bit_diff);
+        fullsearch(me_block,pe_8bit_diff);
         auto ave=me_block_calc_average_cost(me_block);
         me_block_destruct(me_block);
         img_destruct(img_prev);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 
         img_yuv_to_buf(frame,frame_buf);
 
-        printf("%f\n",ave);
+        printf("%f\t%ld\t%.2f%%\n",ave,ftell(fp_in)/frame_bytes,(double)ftell(fp_in)/filesize*100);
         fflush(stdout);
 
         tmp=frame;
