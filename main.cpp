@@ -32,15 +32,25 @@ int main(int argc, char *argv[])
     struct img_yuv_t *frame=img_yuv_create(width, height, 0);
     struct img_yuv_t *tmp;
 
-    clock_t start=clock();
-
     unsigned char *frame_buf=(unsigned char *)malloc(sizeof(unsigned char)*frame_bytes);
     fread(frame_buf, 1, frame_bytes, fp_in);
     buf_to_img_yuv(frame_buf,frame_prev);
-    printf("%s\tsize:%dx%d\n", argv[1], width, height);
-    printf("fullsearch\tpe_8bit_diff\n");
-    printf("ave_sad\tframe#\ttotal_frame:%ld\n",filesize/frame_bytes);
 
+    double ave_pe_1bit_diff           = 0;
+    double ave_pe_2bit_diff           = 0;
+    double ave_pe_3bit_diff           = 0;
+    double ave_pe_4bit_diff           = 0;
+    double ave_pe_5bit_diff           = 0;
+    double ave_pe_6bit_diff           = 0;
+    double ave_pe_7bit_diff           = 0;
+    double ave_pe_8bit_diff           = 0;
+    double ave_pe_2bit_diff_6bit_exor = 0;
+    double ave_pe_3bit_diff_5bit_exor = 0;
+    double ave_pe_4bit_diff_4bit_exor = 0;
+    double ave_pe_5bit_diff_3bit_exor = 0;
+    double ave_pe_6bit_diff_2bit_exor = 0;
+
+    int num_of_frame=0;
     while(frame_bytes==fread(frame_buf, 1, frame_bytes, fp_in))
     {
         buf_to_img_yuv(frame_buf,frame);
@@ -49,16 +59,29 @@ int main(int argc, char *argv[])
         struct img_t *img_curr=img_copy(width,height,frame->y);
         struct img_t *img_prev=img_copy(width,height,frame_prev->y);
         auto me_block=me_block_create(img_curr,img_prev,16,16);
-        fullsearch(me_block,pe_8bit_diff);
-        auto ave=me_block_calc_average_cost(me_block);
+
+        fullsearch(me_block,pe_1bit_diff); ave_pe_1bit_diff+=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_2bit_diff); ave_pe_2bit_diff+=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_3bit_diff); ave_pe_3bit_diff+=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_4bit_diff); ave_pe_4bit_diff+=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_5bit_diff); ave_pe_5bit_diff+=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_6bit_diff); ave_pe_6bit_diff+=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_7bit_diff); ave_pe_7bit_diff+=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_8bit_diff); ave_pe_8bit_diff+=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_2bit_diff_6bit_exor); ave_pe_2bit_diff_6bit_exor+=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_3bit_diff_5bit_exor); ave_pe_3bit_diff_5bit_exor+=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_4bit_diff_4bit_exor); ave_pe_4bit_diff_4bit_exor+=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_5bit_diff_3bit_exor); ave_pe_5bit_diff_3bit_exor+=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_6bit_diff_2bit_exor); ave_pe_6bit_diff_2bit_exor+=me_block_calc_average_cost(me_block);
+
         me_block_destruct(me_block);
         img_destruct(img_prev);
         img_destruct(img_curr);
+        num_of_frame++;
         // some process end
 
         img_yuv_to_buf(frame,frame_buf);
 
-        printf("%f\t%ld\t%.2f%%\n",ave,ftell(fp_in)/frame_bytes,(double)ftell(fp_in)/filesize*100);
         fflush(stdout);
 
         tmp=frame;
@@ -66,7 +89,35 @@ int main(int argc, char *argv[])
         frame_prev=tmp;
     }
 
-    printf("elapsed: %.1f\n", (double)(clock()-start)/CLOCKS_PER_SEC);
+
+    ave_pe_1bit_diff           /= num_of_frame;
+    ave_pe_2bit_diff           /= num_of_frame;
+    ave_pe_3bit_diff           /= num_of_frame;
+    ave_pe_4bit_diff           /= num_of_frame;
+    ave_pe_5bit_diff           /= num_of_frame;
+    ave_pe_6bit_diff           /= num_of_frame;
+    ave_pe_7bit_diff           /= num_of_frame;
+    ave_pe_8bit_diff           /= num_of_frame;
+    ave_pe_2bit_diff_6bit_exor /= num_of_frame;
+    ave_pe_3bit_diff_5bit_exor /= num_of_frame;
+    ave_pe_4bit_diff_4bit_exor /= num_of_frame;
+    ave_pe_5bit_diff_3bit_exor /= num_of_frame;
+    ave_pe_6bit_diff_2bit_exor /= num_of_frame;
+
+    printf("%s\n", argv[1]);
+    printf("ave_pe_1bit_diff\t%f\n"           , ave_pe_1bit_diff          );
+    printf("ave_pe_2bit_diff\t%f\n"           , ave_pe_2bit_diff          );
+    printf("ave_pe_3bit_diff\t%f\n"           , ave_pe_3bit_diff          );
+    printf("ave_pe_4bit_diff\t%f\n"           , ave_pe_4bit_diff          );
+    printf("ave_pe_5bit_diff\t%f\n"           , ave_pe_5bit_diff          );
+    printf("ave_pe_6bit_diff\t%f\n"           , ave_pe_6bit_diff          );
+    printf("ave_pe_7bit_diff\t%f\n"           , ave_pe_7bit_diff          );
+    printf("ave_pe_8bit_diff\t%f\n"           , ave_pe_8bit_diff          );
+    printf("ave_pe_2bit_diff_6bit_exor\t%f\n" , ave_pe_2bit_diff_6bit_exor);
+    printf("ave_pe_3bit_diff_5bit_exor\t%f\n" , ave_pe_3bit_diff_5bit_exor);
+    printf("ave_pe_4bit_diff_4bit_exor\t%f\n" , ave_pe_4bit_diff_4bit_exor);
+    printf("ave_pe_5bit_diff_3bit_exor\t%f\n" , ave_pe_5bit_diff_3bit_exor);
+    printf("ave_pe_6bit_diff_2bit_exor\t%f\n" , ave_pe_6bit_diff_2bit_exor);
 
     fclose(fp_in);
     free(frame_buf);
