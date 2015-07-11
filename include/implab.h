@@ -35,7 +35,6 @@ struct img_yuv_t
 };
 
 // imp functions
-unsigned char  **Malloc2D_uchr(int ht, int wt, unsigned char init);
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,6 +51,7 @@ void img_yuv_destruct(struct img_yuv_t *img);
 void buf_to_img_yuv(unsigned char *frame_buf, struct img_yuv_t *frame);
 void img_yuv_to_buf(struct img_yuv_t *frame, unsigned char *frame_buf);
 struct img_rgb_t *img_yuv_to_rgb(struct img_yuv_t *img_yuv);
+unsigned char  **Malloc2D_uchr(int ht, int wt, unsigned char init);
 #ifdef __cplusplus
 }
 #endif
