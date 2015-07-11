@@ -1,8 +1,4 @@
-#include <stdlib.h>
-#include <time.h>
-#include "include/implab.h"
-#include "include/motion_estimation.h"
-#include "include/processor_element.h"
+#include "include/main.h"
 
 int main_video_process(int argc, char *argv[])
 {
