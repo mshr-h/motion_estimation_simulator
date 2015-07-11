@@ -23,10 +23,12 @@ void fullsearch(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, 
                 for(cand_mvec.w=-sw_range; cand_mvec.w<=sw_range; cand_mvec.w++)
                 {
                     cand_mvec.cost=0;
+#ifndef QT_NO_DEBUG
                     assert(cand_mvec.h >= -sw_range);
                     assert(cand_mvec.h <= sw_range);
                     assert(cand_mvec.w >= -sw_range);
                     assert(cand_mvec.w <= sw_range);
+#endif
                     for(lh=0; lh<tb_size; lh++)
                     {
                         for(lw=0; lw<tb_size; lw++)
@@ -53,10 +55,12 @@ void fullsearch(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, 
                 }
             }
 
+#ifndef QT_NO_DEBUG
             assert(min_mvec.h >= -sw_range);
             assert(min_mvec.h <= sw_range);
             assert(min_mvec.w >= -sw_range);
             assert(min_mvec.w <= sw_range);
+#endif
 
             // recompute motion vector cost
             min_mvec.cost=0;
