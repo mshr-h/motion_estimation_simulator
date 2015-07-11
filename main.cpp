@@ -5,6 +5,7 @@
 #include "include/processor_element.h"
 
 int main_video_process(int argc, char *argv[]);
+int main_frame_process(int argc, char *argv[]);
 
 int main(int argc, char *argv[])
 {

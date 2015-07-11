@@ -9,6 +9,7 @@ HEADERS += \
 
 SOURCES += \
     main.cpp \
+    main_frame_process.cpp \
     main_video_process.cpp \
     lib_c/implab/img_copy.c \
     lib_c/implab/img_create.c \
