@@ -5,7 +5,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 HEADERS += \
     include/implab.h \
     include/motion_estimation.h \
-    include/processor_element.h
+    include/processor_element.h \
+    include/main.h
 
 SOURCES += \
     main.cpp \
@@ -33,4 +34,7 @@ SOURCES += \
     lib_c/motion_estimation/me_block_destruct.c \
     lib_c/motion_estimation/me_block_reconstruct.c \
     lib_c/motion_estimation/mvec_table_craete.c \
-    lib_c/motion_estimation/mvec_table_destruct.c
+    lib_c/motion_estimation/mvec_table_destruct.c \
+    lib_qc/img_rgb_to_QImage.cpp \
+    lib_qc/img_to_QImage.cpp \
+    lib_qc/QImage_to_img_rgb.cpp
