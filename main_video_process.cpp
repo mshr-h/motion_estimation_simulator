@@ -8,7 +8,7 @@ int main_video_process(int argc, char *argv[])
 {
     if(argc < 4)
     {
-        printf("./me movie.yuv 1920 1080\n");
+        printf("./motion_estimation movie.yuv 1920 1080\n");
         exit(1);
     }
 
