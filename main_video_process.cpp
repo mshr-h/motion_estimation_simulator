@@ -56,14 +56,14 @@ int main_video_process(int argc, char *argv[])
         struct img_t *img_prev=img_copy(width,height,frame_prev->y);
         auto me_block=me_block_create(img_curr,img_prev,16,16);
 
-        fullsearch(me_block,pe_1bit_diff); ave_pe_1bit_diff+=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_2bit_diff); ave_pe_2bit_diff+=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_3bit_diff); ave_pe_3bit_diff+=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_4bit_diff); ave_pe_4bit_diff+=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_5bit_diff); ave_pe_5bit_diff+=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_6bit_diff); ave_pe_6bit_diff+=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_7bit_diff); ave_pe_7bit_diff+=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_8bit_diff); ave_pe_8bit_diff+=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_1bit_diff);           ave_pe_1bit_diff          +=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_2bit_diff);           ave_pe_2bit_diff          +=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_3bit_diff);           ave_pe_3bit_diff          +=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_4bit_diff);           ave_pe_4bit_diff          +=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_5bit_diff);           ave_pe_5bit_diff          +=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_6bit_diff);           ave_pe_6bit_diff          +=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_7bit_diff);           ave_pe_7bit_diff          +=me_block_calc_average_cost(me_block);
+        fullsearch(me_block,pe_8bit_diff);           ave_pe_8bit_diff          +=me_block_calc_average_cost(me_block);
         fullsearch(me_block,pe_2bit_diff_6bit_exor); ave_pe_2bit_diff_6bit_exor+=me_block_calc_average_cost(me_block);
         fullsearch(me_block,pe_3bit_diff_5bit_exor); ave_pe_3bit_diff_5bit_exor+=me_block_calc_average_cost(me_block);
         fullsearch(me_block,pe_4bit_diff_4bit_exor); ave_pe_4bit_diff_4bit_exor+=me_block_calc_average_cost(me_block);
@@ -84,7 +84,6 @@ int main_video_process(int argc, char *argv[])
         frame=frame_prev;
         frame_prev=tmp;
     }
-
 
     ave_pe_1bit_diff           /= num_of_frame;
     ave_pe_2bit_diff           /= num_of_frame;
