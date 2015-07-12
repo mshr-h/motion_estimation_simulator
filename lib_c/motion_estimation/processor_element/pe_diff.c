@@ -6,7 +6,7 @@ unsigned char pe_1bit_diff(unsigned char a, unsigned char b)
     ret=abs( ((a>>7)&0x1)-((b>>7)&0x1) );
 #ifndef QT_NO_DEBUG
     assert(ret>=0);
-    assert(ret<=0x3);
+    assert(ret<=0x1);
 #endif
     return (unsigned char)ret;
 }
