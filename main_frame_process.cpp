@@ -4,15 +4,25 @@ int main_frame_process(int argc, char *argv[])
 {
     if(argc < 3)
     {
-        printf("./motion_estimation current_frame.png reference_frame.png\n");
+        printf("./motion_estimation current_frame.png reference_frame.png output.csv\n");
         exit(1);
     }
 
-    QString curr_fn=argv[1];
-    QString prev_fn=argv[2];
+    clock_t start=clock();
 
-    QImage curr_qimg(curr_fn);
-    QImage prev_qimg(prev_fn);
+    QImage prev_qimg(argv[2]);
+    if(prev_qimg.isNull())
+    {
+        printf("couldn't open %s\n", argv[2]);
+        exit(1);
+    }
+
+    QImage curr_qimg(argv[2]);
+    if(curr_qimg.isNull())
+    {
+        printf("couldn't open %s\n", argv[1]);
+        exit(1);
+    }
 
     auto curr_img_rgb=QImage_to_img_rgb(&curr_qimg);
     auto prev_img_rgb=QImage_to_img_rgb(&prev_qimg);
@@ -27,53 +37,100 @@ int main_frame_process(int argc, char *argv[])
     img_yuv_destruct(curr_img_yuv);
     img_yuv_destruct(prev_img_yuv);
 
-    auto me_block=me_block_create(curr_img, prev_img, 16, 16);
+    auto me_block_1bit_diff=me_block_create(curr_img, prev_img, 16, 16);
+    auto me_block_2bit_diff=me_block_create(curr_img, prev_img, 16, 16);
+    auto me_block_3bit_diff=me_block_create(curr_img, prev_img, 16, 16);
+    auto me_block_4bit_diff=me_block_create(curr_img, prev_img, 16, 16);
+    auto me_block_5bit_diff=me_block_create(curr_img, prev_img, 16, 16);
+    auto me_block_6bit_diff=me_block_create(curr_img, prev_img, 16, 16);
+    auto me_block_7bit_diff=me_block_create(curr_img, prev_img, 16, 16);
+    auto me_block_8bit_diff=me_block_create(curr_img, prev_img, 16, 16);
+    auto me_block_2bit_diff_6bit_exor=me_block_create(curr_img, prev_img, 16, 16);
+    auto me_block_3bit_diff_5bit_exor=me_block_create(curr_img, prev_img, 16, 16);
+    auto me_block_4bit_diff_4bit_exor=me_block_create(curr_img, prev_img, 16, 16);
+    auto me_block_5bit_diff_3bit_exor=me_block_create(curr_img, prev_img, 16, 16);
+    auto me_block_6bit_diff_2bit_exor=me_block_create(curr_img, prev_img, 16, 16);
     img_destruct(curr_img);
     img_destruct(prev_img);
 
-    double ave_pe_1bit_diff           = 0;
-    double ave_pe_2bit_diff           = 0;
-    double ave_pe_3bit_diff           = 0;
-    double ave_pe_4bit_diff           = 0;
-    double ave_pe_5bit_diff           = 0;
-    double ave_pe_6bit_diff           = 0;
-    double ave_pe_7bit_diff           = 0;
-    double ave_pe_8bit_diff           = 0;
-    double ave_pe_2bit_diff_6bit_exor = 0;
-    double ave_pe_3bit_diff_5bit_exor = 0;
-    double ave_pe_4bit_diff_4bit_exor = 0;
-    double ave_pe_5bit_diff_3bit_exor = 0;
-    double ave_pe_6bit_diff_2bit_exor = 0;
+    fullsearch(me_block_1bit_diff,pe_1bit_diff                     );
+    fullsearch(me_block_2bit_diff,pe_2bit_diff                     );
+    fullsearch(me_block_3bit_diff,pe_3bit_diff                     );
+    fullsearch(me_block_4bit_diff,pe_4bit_diff                     );
+    fullsearch(me_block_5bit_diff,pe_5bit_diff                     );
+    fullsearch(me_block_6bit_diff,pe_6bit_diff                     );
+    fullsearch(me_block_7bit_diff,pe_7bit_diff                     );
+    fullsearch(me_block_8bit_diff,pe_8bit_diff                     );
+    fullsearch(me_block_2bit_diff_6bit_exor,pe_2bit_diff_6bit_exor );
+    fullsearch(me_block_3bit_diff_5bit_exor,pe_3bit_diff_5bit_exor );
+    fullsearch(me_block_4bit_diff_4bit_exor,pe_4bit_diff_4bit_exor );
+    fullsearch(me_block_5bit_diff_3bit_exor,pe_5bit_diff_3bit_exor );
+    fullsearch(me_block_6bit_diff_2bit_exor,pe_6bit_diff_2bit_exor );
+    auto ave_pe_1bit_diff          =me_block_calc_average_cost(me_block_1bit_diff           );
+    auto ave_pe_2bit_diff          =me_block_calc_average_cost(me_block_2bit_diff           );
+    auto ave_pe_3bit_diff          =me_block_calc_average_cost(me_block_3bit_diff           );
+    auto ave_pe_4bit_diff          =me_block_calc_average_cost(me_block_4bit_diff           );
+    auto ave_pe_5bit_diff          =me_block_calc_average_cost(me_block_5bit_diff           );
+    auto ave_pe_6bit_diff          =me_block_calc_average_cost(me_block_6bit_diff           );
+    auto ave_pe_7bit_diff          =me_block_calc_average_cost(me_block_7bit_diff           );
+    auto ave_pe_8bit_diff          =me_block_calc_average_cost(me_block_8bit_diff           );
+    auto ave_pe_2bit_diff_6bit_exor=me_block_calc_average_cost(me_block_2bit_diff_6bit_exor );
+    auto ave_pe_3bit_diff_5bit_exor=me_block_calc_average_cost(me_block_3bit_diff_5bit_exor );
+    auto ave_pe_4bit_diff_4bit_exor=me_block_calc_average_cost(me_block_4bit_diff_4bit_exor );
+    auto ave_pe_5bit_diff_3bit_exor=me_block_calc_average_cost(me_block_5bit_diff_3bit_exor );
+    auto ave_pe_6bit_diff_2bit_exor=me_block_calc_average_cost(me_block_6bit_diff_2bit_exor );
 
-    printf("\t%s\n", argv[1]); fflush(stdout);
-    fullsearch(me_block,pe_1bit_diff); ave_pe_1bit_diff=me_block_calc_average_cost(me_block);
-    printf("ave_pe_1bit_diff\t%f\n"           , ave_pe_1bit_diff          ); fflush(stdout);
-    fullsearch(me_block,pe_2bit_diff); ave_pe_2bit_diff=me_block_calc_average_cost(me_block);
-    printf("ave_pe_2bit_diff\t%f\n"           , ave_pe_2bit_diff          ); fflush(stdout);
-    fullsearch(me_block,pe_3bit_diff); ave_pe_3bit_diff=me_block_calc_average_cost(me_block);
-    printf("ave_pe_3bit_diff\t%f\n"           , ave_pe_3bit_diff          ); fflush(stdout);
-    fullsearch(me_block,pe_4bit_diff); ave_pe_4bit_diff=me_block_calc_average_cost(me_block);
-    printf("ave_pe_4bit_diff\t%f\n"           , ave_pe_4bit_diff          ); fflush(stdout);
-    fullsearch(me_block,pe_5bit_diff); ave_pe_5bit_diff=me_block_calc_average_cost(me_block);
-    printf("ave_pe_5bit_diff\t%f\n"           , ave_pe_5bit_diff          ); fflush(stdout);
-    fullsearch(me_block,pe_6bit_diff); ave_pe_6bit_diff=me_block_calc_average_cost(me_block);
-    printf("ave_pe_6bit_diff\t%f\n"           , ave_pe_6bit_diff          ); fflush(stdout);
-    fullsearch(me_block,pe_7bit_diff); ave_pe_7bit_diff=me_block_calc_average_cost(me_block);
-    printf("ave_pe_7bit_diff\t%f\n"           , ave_pe_7bit_diff          ); fflush(stdout);
-    fullsearch(me_block,pe_8bit_diff); ave_pe_8bit_diff=me_block_calc_average_cost(me_block);
-    printf("ave_pe_8bit_diff\t%f\n"           , ave_pe_8bit_diff          ); fflush(stdout);
-    fullsearch(me_block,pe_2bit_diff_6bit_exor); ave_pe_2bit_diff_6bit_exor=me_block_calc_average_cost(me_block);
-    printf("ave_pe_2bit_diff_6bit_exor\t%f\n" , ave_pe_2bit_diff_6bit_exor); fflush(stdout);
-    fullsearch(me_block,pe_3bit_diff_5bit_exor); ave_pe_3bit_diff_5bit_exor=me_block_calc_average_cost(me_block);
-    printf("ave_pe_3bit_diff_5bit_exor\t%f\n" , ave_pe_3bit_diff_5bit_exor); fflush(stdout);
-    fullsearch(me_block,pe_4bit_diff_4bit_exor); ave_pe_4bit_diff_4bit_exor=me_block_calc_average_cost(me_block);
-    printf("ave_pe_4bit_diff_4bit_exor\t%f\n" , ave_pe_4bit_diff_4bit_exor); fflush(stdout);
-    fullsearch(me_block,pe_5bit_diff_3bit_exor); ave_pe_5bit_diff_3bit_exor=me_block_calc_average_cost(me_block);
-    printf("ave_pe_5bit_diff_3bit_exor\t%f\n" , ave_pe_5bit_diff_3bit_exor); fflush(stdout);
-    fullsearch(me_block,pe_6bit_diff_2bit_exor); ave_pe_6bit_diff_2bit_exor=me_block_calc_average_cost(me_block);
-    printf("ave_pe_6bit_diff_2bit_exor\t%f\n" , ave_pe_6bit_diff_2bit_exor); fflush(stdout);
+    FILE *fp_out_csv=fopen(argv[3], "w");
+    if(NULL==fp_out_csv)
+    {
+        fprintf(stderr, "%s:%d cannot open %s\n", __FILE__, __LINE__ , argv[3]);
+        exit(1);
+    }
 
-    me_block_destruct(me_block);
+    fprintf(fp_out_csv, "%s\t%.1f sec\n", argv[1], (double)(clock()-start)/CLOCKS_PER_SEC);
+    fprintf(fp_out_csv, "\t1bit_diff\t\t2bit_diff\t\t3bit_diff\t\t4bit_diff\t\t5bit_diff\t\t6bit_diff\t\t7bit_diff\t\t8bit_diff\t\t2bit_diff_6bit_exor\t\t3bit_diff_5bit_exor\t\t4bit_diff_4bit_exor\t\t5bit_diff_3bit_exor\t\t6bit_diff_2bit_exor\t\n");
+    fprintf(fp_out_csv, "\t%f\t\t%f\t\t%f\t\t%f\t\t%f\t\t%f\t\t%f\t\t%f\t\t%f\t\t%f\t\t%f\t\t%f\t\t%f\t\t\n",
+            ave_pe_1bit_diff, ave_pe_2bit_diff, ave_pe_3bit_diff, ave_pe_4bit_diff, ave_pe_5bit_diff, ave_pe_6bit_diff, ave_pe_7bit_diff, ave_pe_8bit_diff,
+            ave_pe_2bit_diff_6bit_exor, ave_pe_3bit_diff_5bit_exor, ave_pe_4bit_diff_4bit_exor, ave_pe_5bit_diff_3bit_exor, ave_pe_6bit_diff_2bit_exor);
+    fprintf(fp_out_csv, "(w,h)\tmv_w\tmv_h\tmv_w\tmv_h\tmv_w\tmv_h\tmv_w\tmv_h\tmv_w\tmv_h\tmv_w\tmv_h\tmv_w\tmv_h\tmv_w\tmv_h\tmv_w\tmv_h\tmv_w\tmv_h\tmv_w\tmv_h\tmv_w\tmv_h\tmv_w\tmv_h\t\n");
+
+    for(int h=0;h<me_block_1bit_diff->mvec_table->ht;h++)
+    {
+        for(int w=0;w<me_block_1bit_diff->mvec_table->wt;w++)
+        {
+            fprintf(fp_out_csv, "(%d, %d)\t",w,h);
+            fprintf(fp_out_csv, "%d\t%d\t",me_block_1bit_diff->mvec_table->data[h][w].w,me_block_1bit_diff->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "%d\t%d\t",me_block_2bit_diff->mvec_table->data[h][w].w,me_block_2bit_diff->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "%d\t%d\t",me_block_3bit_diff->mvec_table->data[h][w].w,me_block_3bit_diff->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "%d\t%d\t",me_block_4bit_diff->mvec_table->data[h][w].w,me_block_4bit_diff->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "%d\t%d\t",me_block_5bit_diff->mvec_table->data[h][w].w,me_block_5bit_diff->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "%d\t%d\t",me_block_6bit_diff->mvec_table->data[h][w].w,me_block_6bit_diff->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "%d\t%d\t",me_block_7bit_diff->mvec_table->data[h][w].w,me_block_7bit_diff->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "%d\t%d\t",me_block_8bit_diff->mvec_table->data[h][w].w,me_block_8bit_diff->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "%d\t%d\t",me_block_2bit_diff_6bit_exor->mvec_table->data[h][w].w,me_block_2bit_diff_6bit_exor->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "%d\t%d\t",me_block_3bit_diff_5bit_exor->mvec_table->data[h][w].w,me_block_3bit_diff_5bit_exor->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "%d\t%d\t",me_block_4bit_diff_4bit_exor->mvec_table->data[h][w].w,me_block_4bit_diff_4bit_exor->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "%d\t%d\t",me_block_5bit_diff_3bit_exor->mvec_table->data[h][w].w,me_block_5bit_diff_3bit_exor->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "%d\t%d\t",me_block_6bit_diff_2bit_exor->mvec_table->data[h][w].w,me_block_6bit_diff_2bit_exor->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "\n");
+        }
+    }
+
+    fclose(fp_out_csv);
+
+    me_block_destruct(me_block_1bit_diff);
+    me_block_destruct(me_block_2bit_diff);
+    me_block_destruct(me_block_3bit_diff);
+    me_block_destruct(me_block_4bit_diff);
+    me_block_destruct(me_block_5bit_diff);
+    me_block_destruct(me_block_6bit_diff);
+    me_block_destruct(me_block_7bit_diff);
+    me_block_destruct(me_block_8bit_diff);
+    me_block_destruct(me_block_2bit_diff_6bit_exor);
+    me_block_destruct(me_block_3bit_diff_5bit_exor);
+    me_block_destruct(me_block_4bit_diff_4bit_exor);
+    me_block_destruct(me_block_5bit_diff_3bit_exor);
+    me_block_destruct(me_block_6bit_diff_2bit_exor);
 
     return 0;
 }

@@ -1,11 +1,13 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <QImage>
 #include <QColor>
 #include <QDebug>
+#include <QDir>
 #include "include/implab.h"
 #include "include/motion_estimation.h"
 #include "include/processor_element.h"
