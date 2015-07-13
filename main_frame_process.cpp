@@ -89,30 +89,29 @@ int main_frame_process(int argc, char *argv[])
     }
 
     fprintf(fp_out_csv, "%s,%.1f sec\n", argv[1], (double)(clock()-start)/CLOCKS_PER_SEC);
-    fprintf(fp_out_csv, ",1bit_diff,,2bit_diff,,3bit_diff,,4bit_diff,,5bit_diff,,6bit_diff,,7bit_diff,,8bit_diff,,2bit_diff_6bit_exor,,3bit_diff_5bit_exor,,4bit_diff_4bit_exor,,5bit_diff_3bit_exor,,6bit_diff_2bit_exor,\n");
-    fprintf(fp_out_csv, ",%f,,%f,,%f,,%f,,%f,,%f,,%f,,%f,,%f,,%f,,%f,,%f,,%f,,\n",
+    fprintf(fp_out_csv, ",1bit_diff,%f,,2bit_diff,%f,,3bit_diff,%f,,4bit_diff,%f,,5bit_diff,%f,,6bit_diff,%f,,7bit_diff,%f,,8bit_diff,%f,,2bit_diff_6bit_exor,%f,,3bit_diff_5bit_exor,%f,,4bit_diff_4bit_exor,%f,,5bit_diff_3bit_exor,%f,,6bit_diff_2bit_exor,%f,\n",
             ave_pe_1bit_diff, ave_pe_2bit_diff, ave_pe_3bit_diff, ave_pe_4bit_diff, ave_pe_5bit_diff, ave_pe_6bit_diff, ave_pe_7bit_diff, ave_pe_8bit_diff,
             ave_pe_2bit_diff_6bit_exor, ave_pe_3bit_diff_5bit_exor, ave_pe_4bit_diff_4bit_exor, ave_pe_5bit_diff_3bit_exor, ave_pe_6bit_diff_2bit_exor);
-    fprintf(fp_out_csv, "\"(w,h)\",mv_w,mv_h,mv_w,mv_h,mv_w,mv_h,mv_w,mv_h,mv_w,mv_h,mv_w,mv_h,mv_w,mv_h,mv_w,mv_h,mv_w,mv_h,mv_w,mv_h,mv_w,mv_h,mv_w,mv_h,mv_w,mv_h,\n");
+    fprintf(fp_out_csv, "\"(w,h)\",mv_w,mv_h,mv_cost,mv_w,mv_h,mv_cost,mv_w,mv_h,mv_cost,mv_w,mv_h,mv_cost,mv_w,mv_h,mv_cost,mv_w,mv_h,mv_cost,mv_w,mv_h,mv_cost,mv_w,mv_h,mv_cost,mv_w,mv_h,mv_cost,mv_w,mv_h,mv_cost,mv_w,mv_h,mv_cost,mv_w,mv_h,mv_cost,mv_w,mv_h,mv_cost,\n");
 
     for(int h=0;h<me_block_1bit_diff->mvec_table->ht;h++)
     {
         for(int w=0;w<me_block_1bit_diff->mvec_table->wt;w++)
         {
             fprintf(fp_out_csv, "\"(%d, %d)\",",w,h);
-            fprintf(fp_out_csv, "%d,%d,",me_block_1bit_diff->mvec_table->data[h][w].w,me_block_1bit_diff->mvec_table->data[h][w].h);
-            fprintf(fp_out_csv, "%d,%d,",me_block_2bit_diff->mvec_table->data[h][w].w,me_block_2bit_diff->mvec_table->data[h][w].h);
-            fprintf(fp_out_csv, "%d,%d,",me_block_3bit_diff->mvec_table->data[h][w].w,me_block_3bit_diff->mvec_table->data[h][w].h);
-            fprintf(fp_out_csv, "%d,%d,",me_block_4bit_diff->mvec_table->data[h][w].w,me_block_4bit_diff->mvec_table->data[h][w].h);
-            fprintf(fp_out_csv, "%d,%d,",me_block_5bit_diff->mvec_table->data[h][w].w,me_block_5bit_diff->mvec_table->data[h][w].h);
-            fprintf(fp_out_csv, "%d,%d,",me_block_6bit_diff->mvec_table->data[h][w].w,me_block_6bit_diff->mvec_table->data[h][w].h);
-            fprintf(fp_out_csv, "%d,%d,",me_block_7bit_diff->mvec_table->data[h][w].w,me_block_7bit_diff->mvec_table->data[h][w].h);
-            fprintf(fp_out_csv, "%d,%d,",me_block_8bit_diff->mvec_table->data[h][w].w,me_block_8bit_diff->mvec_table->data[h][w].h);
-            fprintf(fp_out_csv, "%d,%d,",me_block_2bit_diff_6bit_exor->mvec_table->data[h][w].w,me_block_2bit_diff_6bit_exor->mvec_table->data[h][w].h);
-            fprintf(fp_out_csv, "%d,%d,",me_block_3bit_diff_5bit_exor->mvec_table->data[h][w].w,me_block_3bit_diff_5bit_exor->mvec_table->data[h][w].h);
-            fprintf(fp_out_csv, "%d,%d,",me_block_4bit_diff_4bit_exor->mvec_table->data[h][w].w,me_block_4bit_diff_4bit_exor->mvec_table->data[h][w].h);
-            fprintf(fp_out_csv, "%d,%d,",me_block_5bit_diff_3bit_exor->mvec_table->data[h][w].w,me_block_5bit_diff_3bit_exor->mvec_table->data[h][w].h);
-            fprintf(fp_out_csv, "%d,%d,",me_block_6bit_diff_2bit_exor->mvec_table->data[h][w].w,me_block_6bit_diff_2bit_exor->mvec_table->data[h][w].h);
+            fprintf(fp_out_csv, "%d,%d,%d,",me_block_1bit_diff->mvec_table->data[h][w].w,          me_block_1bit_diff->mvec_table->data[h][w].h          ,me_block_1bit_diff->mvec_table->data[h][w].cost          );
+            fprintf(fp_out_csv, "%d,%d,%d,",me_block_2bit_diff->mvec_table->data[h][w].w,          me_block_2bit_diff->mvec_table->data[h][w].h          ,me_block_2bit_diff->mvec_table->data[h][w].cost          );
+            fprintf(fp_out_csv, "%d,%d,%d,",me_block_3bit_diff->mvec_table->data[h][w].w,          me_block_3bit_diff->mvec_table->data[h][w].h          ,me_block_3bit_diff->mvec_table->data[h][w].cost          );
+            fprintf(fp_out_csv, "%d,%d,%d,",me_block_4bit_diff->mvec_table->data[h][w].w,          me_block_4bit_diff->mvec_table->data[h][w].h          ,me_block_4bit_diff->mvec_table->data[h][w].cost          );
+            fprintf(fp_out_csv, "%d,%d,%d,",me_block_5bit_diff->mvec_table->data[h][w].w,          me_block_5bit_diff->mvec_table->data[h][w].h          ,me_block_5bit_diff->mvec_table->data[h][w].cost          );
+            fprintf(fp_out_csv, "%d,%d,%d,",me_block_6bit_diff->mvec_table->data[h][w].w,          me_block_6bit_diff->mvec_table->data[h][w].h          ,me_block_6bit_diff->mvec_table->data[h][w].cost          );
+            fprintf(fp_out_csv, "%d,%d,%d,",me_block_7bit_diff->mvec_table->data[h][w].w,          me_block_7bit_diff->mvec_table->data[h][w].h          ,me_block_7bit_diff->mvec_table->data[h][w].cost          );
+            fprintf(fp_out_csv, "%d,%d,%d,",me_block_8bit_diff->mvec_table->data[h][w].w,          me_block_8bit_diff->mvec_table->data[h][w].h          ,me_block_8bit_diff->mvec_table->data[h][w].cost          );
+            fprintf(fp_out_csv, "%d,%d,%d,",me_block_2bit_diff_6bit_exor->mvec_table->data[h][w].w,me_block_2bit_diff_6bit_exor->mvec_table->data[h][w].h,me_block_2bit_diff_6bit_exor->mvec_table->data[h][w].cost);
+            fprintf(fp_out_csv, "%d,%d,%d,",me_block_3bit_diff_5bit_exor->mvec_table->data[h][w].w,me_block_3bit_diff_5bit_exor->mvec_table->data[h][w].h,me_block_3bit_diff_5bit_exor->mvec_table->data[h][w].cost);
+            fprintf(fp_out_csv, "%d,%d,%d,",me_block_4bit_diff_4bit_exor->mvec_table->data[h][w].w,me_block_4bit_diff_4bit_exor->mvec_table->data[h][w].h,me_block_4bit_diff_4bit_exor->mvec_table->data[h][w].cost);
+            fprintf(fp_out_csv, "%d,%d,%d,",me_block_5bit_diff_3bit_exor->mvec_table->data[h][w].w,me_block_5bit_diff_3bit_exor->mvec_table->data[h][w].h,me_block_5bit_diff_3bit_exor->mvec_table->data[h][w].cost);
+            fprintf(fp_out_csv, "%d,%d,%d,",me_block_6bit_diff_2bit_exor->mvec_table->data[h][w].w,me_block_6bit_diff_2bit_exor->mvec_table->data[h][w].h,me_block_6bit_diff_2bit_exor->mvec_table->data[h][w].cost);
             fprintf(fp_out_csv, "\n");
         }
     }
