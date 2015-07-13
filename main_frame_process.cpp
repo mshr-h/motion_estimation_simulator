@@ -11,17 +11,17 @@ int main_frame_process(int argc, char *argv[])
 
     clock_t start=clock();
 
-    QImage prev_qimg(argv[2]);
+    QImage prev_qimg(argv[1]);
     if(prev_qimg.isNull())
     {
-        printf("couldn't open %s\n", argv[2]);
+        printf("couldn't open %s\n", argv[1]);
         exit(1);
     }
 
     QImage curr_qimg(argv[2]);
     if(curr_qimg.isNull())
     {
-        printf("couldn't open %s\n", argv[1]);
+        printf("couldn't open %s\n", argv[2]);
         exit(1);
     }
 
