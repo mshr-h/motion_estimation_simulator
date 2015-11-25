@@ -39,3 +39,4 @@ SOURCES += \
     lib_qc/img_to_QImage.cpp \
     lib_qc/QImage_to_img_rgb.cpp \
     lib_c/motion_estimation/me_block_calc_sum_cost_match.c \
+    lib_c/motion_estimation/fullsearch_new.c
