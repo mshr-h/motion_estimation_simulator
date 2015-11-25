@@ -24,6 +24,7 @@ struct mvec_table_t *mvec_table_craete(int ht, int wt)
             new_table->data[h][w].h=0;
             new_table->data[h][w].w=0;
             new_table->data[h][w].cost=-1;
+            new_table->data[h][w].cost_match=-1;
         }
     }
 

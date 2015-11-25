@@ -10,7 +10,8 @@ struct mvec_t
 {
     int h;
     int w;
-    int cost;
+    int cost; // sum of absolute difference
+    int cost_match; // number of matching pixels
 };
 
 struct mvec_table_t
@@ -39,6 +40,7 @@ struct me_block_t *me_block_create(struct img_t *curr, struct img_t *prev, int s
 void me_block_destruct(struct me_block_t *me_block);
 struct img_t *me_block_reconstruct(struct me_block_t *me);
 double me_block_calc_average_cost(struct me_block_t *me_block);
+int me_block_calc_sum_cost_match(struct me_block_t *me_block);
 
 void fullsearch(struct me_block_t *me, unsigned char (*pe)(unsigned char, unsigned char));
 void fullsearch_4pix(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char));
