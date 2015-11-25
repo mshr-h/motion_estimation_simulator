@@ -11,6 +11,7 @@ struct mvec_t
     int h;
     int w;
     int cost; // sum of absolute difference
+    int cost_edge; // sum of absolute difference of edge image
     int cost_match; // number of matching pixels
 };
 
