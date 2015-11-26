@@ -53,7 +53,7 @@ void fullsearch_filter_kernel(struct me_block_t *me_block, unsigned char (*pe)(u
             // find the motion vector which has the lowest matching error
             min_mvec.cost=MAX_SAD;
             min_mvec.cost_match=0;
-            min_mvec.cost_edge=0;
+            min_mvec.cost_edge=MAX_SAD;
             for(cand_mvec.h=-sw_range; cand_mvec.h<=sw_range; cand_mvec.h++)
             {
                 for(cand_mvec.w=-sw_range; cand_mvec.w<=sw_range; cand_mvec.w++)
@@ -77,6 +77,8 @@ void fullsearch_filter_kernel(struct me_block_t *me_block, unsigned char (*pe)(u
                                 cand_mvec.cost_match+=1;
                         }
                     }
+
+                    // update mvec
                     if(min_mvec.cost > cand_mvec.cost)
                         min_mvec = cand_mvec;
                     else if(min_mvec.cost == cand_mvec.cost)
