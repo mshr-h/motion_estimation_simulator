@@ -52,11 +52,13 @@ void fullsearch_matching(struct me_block_t *me_block, unsigned char (*pe)(unsign
                                 cand_mvec.cost_match+=1;
                         }
                     }
+
+                    // update mvec
                     if(min_mvec.cost > cand_mvec.cost)
                         min_mvec = cand_mvec;
                     else if(min_mvec.cost == cand_mvec.cost)
                     {
-                        if(min_mvec.cost_match > cand_mvec.cost_match)
+                        if(min_mvec.cost_match < cand_mvec.cost_match)
                             min_mvec = cand_mvec;
                     }
                 }
