@@ -1,6 +1,6 @@
 #include "include/motion_estimation.h"
 
-void fullsearch_new(struct me_block_t *me_block)
+void fullsearch_new(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char))
 {
     int h,w,lh,lw; // loop variables
     unsigned char curr_pix; // pixel value of current frame
@@ -71,7 +71,7 @@ void fullsearch_new(struct me_block_t *me_block)
                         {
                             curr_pix=tb_memory->data[lh][lw];
                             prev_pix=sw_memory->data[cand_mvec.h+sw_range+lh][cand_mvec.w+sw_range+lw];
-                            cand_mvec.cost+=abs(curr_pix-prev_pix);
+                            cand_mvec.cost+=pe(curr_pix, prev_pix);
 
                             curr_edge_pix=tb_edge_memory->data[lh][lw];
                             prev_edge_pix=sw_edge_memory->data[cand_mvec.h+sw_range+lh][cand_mvec.w+sw_range+lw];
