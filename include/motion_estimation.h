@@ -45,7 +45,6 @@ int me_block_calc_sum_cost_match(struct me_block_t *me_block);
 
 void fullsearch(struct me_block_t *me, unsigned char (*pe)(unsigned char, unsigned char));
 void fullsearch_4pix(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char));
-void fullsearch_new(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char));
 
 #ifdef __cplusplus
 }
