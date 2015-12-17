@@ -4,9 +4,11 @@ int main_video_process(int argc, char *argv[])
 {
     if(argc < 4)
     {
-        printf("./motion_estimation movie.yuv 1920 1080\n");
+        printf("./motion_estimation movie.yuv 1920 1080 [result.csv]\n");
         exit(1);
     }
+
+    clock_t start=clock();
 
     int width=atoi(argv[2]);
     int height=atoi(argv[3]);
@@ -32,19 +34,30 @@ int main_video_process(int argc, char *argv[])
     fread(frame_buf, 1, frame_bytes, fp_in);
     buf_to_img_yuv(frame_buf,frame_prev);
 
-    double ave_pe_1bit_diff           = 0;
-    double ave_pe_2bit_diff           = 0;
-    double ave_pe_3bit_diff           = 0;
-    double ave_pe_4bit_diff           = 0;
-    double ave_pe_5bit_diff           = 0;
-    double ave_pe_6bit_diff           = 0;
-    double ave_pe_7bit_diff           = 0;
-    double ave_pe_8bit_diff           = 0;
-    double ave_pe_2bit_diff_6bit_exor = 0;
-    double ave_pe_3bit_diff_5bit_exor = 0;
-    double ave_pe_4bit_diff_4bit_exor = 0;
-    double ave_pe_5bit_diff_3bit_exor = 0;
-    double ave_pe_6bit_diff_2bit_exor = 0;
+    int krnl1[][3]={{ 0, 1, 0},
+                    { 1,-4, 1},
+                    { 0, 1, 0}};
+    int krnl2[][3]={{ 1, 1, 1},
+                    { 1,-8, 1},
+                    { 1, 1, 1}};
+    int krnl3[][3]={{ 1,-2, 1},
+                    {-2, 4,-2},
+                    { 1,-2, 1}};
+
+    FILE *fp_out;
+    if(argc == 5) {
+        fp_out=fopen(argv[4], "w");
+        if(NULL==fp_out)
+        {
+            fprintf(stderr, "cant open %s\n", argv[4]);
+            exit(1);
+        }
+    } else
+        fp_out = stdout;
+
+    fprintf(fp_out,",fullsearch,,kernel1,,kernel2,,kernel3,,matching\n");
+    fprintf(fp_out,"frame#,ave_sad,matching,ave_sad,matching,ave_sad,matching,ave_sad,matching,ave_sad,matching\n");
+    fflush(fp_out);
 
     int num_of_frame=0;
     while(frame_bytes==fread(frame_buf, 1, frame_bytes, fp_in))
@@ -54,23 +67,31 @@ int main_video_process(int argc, char *argv[])
         // some process start
         struct img_t *img_curr=img_copy(width,height,frame->y);
         struct img_t *img_prev=img_copy(width,height,frame_prev->y);
-        auto me_block=me_block_create(img_curr,img_prev,16,16);
+        auto me_block_fullsearch         =me_block_create(img_curr, img_prev, 16, 16);
+        auto me_block_fullsearch_edge1   =me_block_create(img_curr, img_prev, 16, 16);
+        auto me_block_fullsearch_edge2   =me_block_create(img_curr, img_prev, 16, 16);
+        auto me_block_fullsearch_edge3   =me_block_create(img_curr, img_prev, 16, 16);
+        auto me_block_fullsearch_matching=me_block_create(img_curr, img_prev, 16, 16);
 
-        fullsearch(me_block,pe_1bit_diff);           ave_pe_1bit_diff          +=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_2bit_diff);           ave_pe_2bit_diff          +=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_3bit_diff);           ave_pe_3bit_diff          +=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_4bit_diff);           ave_pe_4bit_diff          +=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_5bit_diff);           ave_pe_5bit_diff          +=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_6bit_diff);           ave_pe_6bit_diff          +=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_7bit_diff);           ave_pe_7bit_diff          +=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_8bit_diff);           ave_pe_8bit_diff          +=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_2bit_diff_6bit_exor); ave_pe_2bit_diff_6bit_exor+=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_3bit_diff_5bit_exor); ave_pe_3bit_diff_5bit_exor+=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_4bit_diff_4bit_exor); ave_pe_4bit_diff_4bit_exor+=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_5bit_diff_3bit_exor); ave_pe_5bit_diff_3bit_exor+=me_block_calc_average_cost(me_block);
-        fullsearch(me_block,pe_6bit_diff_2bit_exor); ave_pe_6bit_diff_2bit_exor+=me_block_calc_average_cost(me_block);
+        fullsearch              (me_block_fullsearch,          pe_8bit_diff       );
+        fullsearch_filter_kernel(me_block_fullsearch_edge1,    pe_8bit_diff, krnl1);
+        fullsearch_filter_kernel(me_block_fullsearch_edge2,    pe_8bit_diff, krnl2);
+        fullsearch_filter_kernel(me_block_fullsearch_edge3,    pe_8bit_diff, krnl3);
+        fullsearch_matching     (me_block_fullsearch_matching, pe_8bit_diff       );
 
-        me_block_destruct(me_block);
+        fprintf(fp_out,"%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d\n", num_of_frame+2,
+               me_block_calc_average_cost(me_block_fullsearch),          me_block_calc_sum_cost_match(me_block_fullsearch),
+               me_block_calc_average_cost(me_block_fullsearch_edge1),    me_block_calc_sum_cost_match(me_block_fullsearch_edge1),
+               me_block_calc_average_cost(me_block_fullsearch_edge2),    me_block_calc_sum_cost_match(me_block_fullsearch_edge2),
+               me_block_calc_average_cost(me_block_fullsearch_edge3),    me_block_calc_sum_cost_match(me_block_fullsearch_edge3),
+               me_block_calc_average_cost(me_block_fullsearch_matching), me_block_calc_sum_cost_match(me_block_fullsearch_matching));
+
+        me_block_destruct(me_block_fullsearch         );
+        me_block_destruct(me_block_fullsearch_edge1   );
+        me_block_destruct(me_block_fullsearch_edge2   );
+        me_block_destruct(me_block_fullsearch_edge3   );
+        me_block_destruct(me_block_fullsearch_matching);
+
         img_destruct(img_prev);
         img_destruct(img_curr);
         num_of_frame++;
@@ -78,41 +99,14 @@ int main_video_process(int argc, char *argv[])
 
         img_yuv_to_buf(frame,frame_buf);
 
-        fflush(stdout);
+        fflush(fp_out);
 
         tmp=frame;
         frame=frame_prev;
         frame_prev=tmp;
     }
 
-    ave_pe_1bit_diff           /= num_of_frame;
-    ave_pe_2bit_diff           /= num_of_frame;
-    ave_pe_3bit_diff           /= num_of_frame;
-    ave_pe_4bit_diff           /= num_of_frame;
-    ave_pe_5bit_diff           /= num_of_frame;
-    ave_pe_6bit_diff           /= num_of_frame;
-    ave_pe_7bit_diff           /= num_of_frame;
-    ave_pe_8bit_diff           /= num_of_frame;
-    ave_pe_2bit_diff_6bit_exor /= num_of_frame;
-    ave_pe_3bit_diff_5bit_exor /= num_of_frame;
-    ave_pe_4bit_diff_4bit_exor /= num_of_frame;
-    ave_pe_5bit_diff_3bit_exor /= num_of_frame;
-    ave_pe_6bit_diff_2bit_exor /= num_of_frame;
-
-    printf("%s\n", argv[1]);
-    printf("ave_pe_1bit_diff\t%f\n"           , ave_pe_1bit_diff          );
-    printf("ave_pe_2bit_diff\t%f\n"           , ave_pe_2bit_diff          );
-    printf("ave_pe_3bit_diff\t%f\n"           , ave_pe_3bit_diff          );
-    printf("ave_pe_4bit_diff\t%f\n"           , ave_pe_4bit_diff          );
-    printf("ave_pe_5bit_diff\t%f\n"           , ave_pe_5bit_diff          );
-    printf("ave_pe_6bit_diff\t%f\n"           , ave_pe_6bit_diff          );
-    printf("ave_pe_7bit_diff\t%f\n"           , ave_pe_7bit_diff          );
-    printf("ave_pe_8bit_diff\t%f\n"           , ave_pe_8bit_diff          );
-    printf("ave_pe_2bit_diff_6bit_exor\t%f\n" , ave_pe_2bit_diff_6bit_exor);
-    printf("ave_pe_3bit_diff_5bit_exor\t%f\n" , ave_pe_3bit_diff_5bit_exor);
-    printf("ave_pe_4bit_diff_4bit_exor\t%f\n" , ave_pe_4bit_diff_4bit_exor);
-    printf("ave_pe_5bit_diff_3bit_exor\t%f\n" , ave_pe_5bit_diff_3bit_exor);
-    printf("ave_pe_6bit_diff_2bit_exor\t%f\n" , ave_pe_6bit_diff_2bit_exor);
+    printf("%.2f sec\n",  (double)(clock()-start)/CLOCKS_PER_SEC);
 
     fclose(fp_in);
     free(frame_buf);
