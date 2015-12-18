@@ -53,7 +53,7 @@ void fullsearch(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, 
                         }
                     }
 
-                    // update mvec
+                    // update the best mvec
                     if(min_mvec.cost > cand_mvec.cost)
                         min_mvec = cand_mvec;
                 }

@@ -78,7 +78,7 @@ void fullsearch_filter_kernel(struct me_block_t *me_block, unsigned char (*pe)(u
                         }
                     }
 
-                    // update mvec
+                    // update the best mvec
                     if(min_mvec.cost > cand_mvec.cost)
                         min_mvec = cand_mvec;
                     else if(min_mvec.cost == cand_mvec.cost)
