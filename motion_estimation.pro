@@ -28,7 +28,6 @@ SOURCES += \
     lib_c/motion_estimation/processor_element/pe_diff.c \
     lib_c/motion_estimation/processor_element/pe_diff_exor.c \
     lib_c/motion_estimation/fullsearch.c \
-    lib_c/motion_estimation/fullsearch_4pix_only.c \
     lib_c/motion_estimation/me_block_calc_average_cost.c \
     lib_c/motion_estimation/me_block_create.c \
     lib_c/motion_estimation/me_block_destruct.c \
@@ -40,4 +39,6 @@ SOURCES += \
     lib_qc/QImage_to_img_rgb.cpp \
     lib_c/motion_estimation/me_block_calc_sum_cost_match.c \
     lib_c/motion_estimation/fullsearch_filter_kernel.c \
-    lib_c/motion_estimation/fullsearch_matching.c
+    lib_c/motion_estimation/fullsearch_matching.c \
+    lib_c/motion_estimation/fullsearch_4pix.c \
+    lib_c/motion_estimation/fullsearch_4pix_only.c
