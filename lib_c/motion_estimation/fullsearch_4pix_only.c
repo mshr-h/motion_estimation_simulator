@@ -1,6 +1,6 @@
 #include "include/motion_estimation.h"
 
-void fullsearch_4pix(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char))
+void fullsearch_4pix_only(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char))
 {
     int h,w,lh,lw; // loop variables
     unsigned char curr_pix; // pixel value of current frame
