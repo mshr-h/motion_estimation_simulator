@@ -2,5 +2,5 @@
 
 int main(int argc, char *argv[])
 {
-    return main_video_process(argc, argv);
+    return main_frame_process(argc, argv);
 }

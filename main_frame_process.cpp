@@ -39,6 +39,8 @@ int main_frame_process(int argc, char *argv[])
     img_yuv_destruct(prev_img_yuv);
 
     auto me_block_fullsearch=me_block_create(img_curr, img_prev, 16, 16);
+    auto me_block_fullsearch_4pix=me_block_create(img_curr, img_prev, 16, 16);
+    auto me_block_fullsearch_4pix_only=me_block_create(img_curr, img_prev, 16, 16);
     auto me_block_fullsearch_edge1=me_block_create(img_curr, img_prev, 16, 16);
     auto me_block_fullsearch_edge2=me_block_create(img_curr, img_prev, 16, 16);
     auto me_block_fullsearch_edge3=me_block_create(img_curr, img_prev, 16, 16);
@@ -48,44 +50,28 @@ int main_frame_process(int argc, char *argv[])
 
     // current method
     fullsearch(me_block_fullsearch, pe_8bit_diff);
-    printf("curr : %d, sad: %f\n",
+    printf("curr : %6d, sad: %f\n",
            me_block_calc_sum_cost_match(me_block_fullsearch),
            me_block_calc_average_cost(me_block_fullsearch));
     fflush(stdout);
 
-    // proposed method 1
-    int krnl1[][3] = {{0, 1,0},
-                      {1,-4,1},
-                      {0, 1,0}};
-    fullsearch_filter_kernel(me_block_fullsearch_edge1, pe_8bit_diff, krnl1);
-    printf("krnl1: %d, sad: %f\n",
-           me_block_calc_sum_cost_match(me_block_fullsearch_edge1),
-           me_block_calc_average_cost(me_block_fullsearch_edge1));
+    // 4pix search method
+    fullsearch_4pix(me_block_fullsearch_4pix, pe_8bit_diff);
+    printf("4pix : %6d, sad: %f\n",
+           me_block_calc_sum_cost_match(me_block_fullsearch_4pix),
+           me_block_calc_average_cost(me_block_fullsearch_4pix));
     fflush(stdout);
 
-    // proposed method 2
-    int krnl2[][3] = {{1, 1,1},
-                      {1,-8,1},
-                      {1, 1,1}};
-    fullsearch_filter_kernel(me_block_fullsearch_edge2, pe_8bit_diff, krnl2);
-    printf("krnl2: %d, sad: %f\n",
-           me_block_calc_sum_cost_match(me_block_fullsearch_edge2),
-           me_block_calc_average_cost(me_block_fullsearch_edge2));
-    fflush(stdout);
-
-    // proposed method 3
-    int krnl3[][3] = {{ 1,-2, 1},
-                      {-2, 4,-2},
-                      { 1,-2, 1}};
-    fullsearch_filter_kernel(me_block_fullsearch_edge3, pe_8bit_diff, krnl3);
-    printf("krnl3: %d, sad: %f\n",
-           me_block_calc_sum_cost_match(me_block_fullsearch_edge3),
-           me_block_calc_average_cost(me_block_fullsearch_edge3));
+    // 4pix only search method
+    fullsearch_4pix_only(me_block_fullsearch_4pix_only, pe_8bit_diff);
+    printf("4pixo: %6d, sad: %f\n",
+           me_block_calc_sum_cost_match(me_block_fullsearch_4pix_only),
+           me_block_calc_average_cost(me_block_fullsearch_4pix_only));
     fflush(stdout);
 
     // proposed method 4
     fullsearch_matching(me_block_fullsearch_matching, pe_8bit_diff);
-    printf("match: %d, sad: %f\n",
+    printf("match: %6d, sad: %f\n",
            me_block_calc_sum_cost_match(me_block_fullsearch_matching),
            me_block_calc_average_cost(me_block_fullsearch_matching));
     fflush(stdout);
@@ -102,6 +88,7 @@ int main_frame_process(int argc, char *argv[])
     fclose(fp_out_csv);*/
 
     me_block_destruct(me_block_fullsearch);
+    me_block_destruct(me_block_fullsearch_4pix);
     me_block_destruct(me_block_fullsearch_edge1);
     me_block_destruct(me_block_fullsearch_edge2);
     me_block_destruct(me_block_fullsearch_edge3);
