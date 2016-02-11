@@ -44,6 +44,7 @@ void img_destruct(struct img_t *img);
 struct img_t *img_copy(int wt, int ht, unsigned char **data);
 struct img_t *img_diff(struct img_t *img1, struct img_t *img2);
 double img_psnr(struct img_t *img1, struct img_t *img2);
+double img_ssim(struct img_t *img1, struct img_t *img2);
 struct img_rgb_t *img_rgb_create(int wt, int ht, unsigned char init);
 void img_rgb_destruct(struct img_rgb_t *img);
 struct img_yuv_t *img_rgb_to_yuv(struct img_rgb_t *img_rgb);

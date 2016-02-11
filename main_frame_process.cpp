@@ -5,11 +5,12 @@ void printResult(struct img_t *img_curr, struct img_t *img_prev, void (*method)(
     auto me_block=me_block_create(img_curr, img_prev, 16, 16);
     method(me_block, pe_8bit_diff);
     auto img_rec=me_block_reconstruct(me_block);
-    printf("%s: %6d, sad: %f, psnr: %f\n",
+    printf("%s: %6d, sad: %f, psnr: %f, ssim: %f\n",
            name,
            me_block_calc_sum_cost_match(me_block),
            me_block_calc_average_cost(me_block),
-           img_psnr(img_curr, img_rec));
+           img_psnr(img_curr, img_rec),
+           img_ssim(img_curr, img_prev));
     fflush(stdout);
     img_destruct(img_rec);
     me_block_destruct(me_block);
