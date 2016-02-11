@@ -41,4 +41,5 @@ SOURCES += \
     lib_c/motion_estimation/fullsearch_filter_kernel.c \
     lib_c/motion_estimation/fullsearch_matching.c \
     lib_c/motion_estimation/fullsearch_4pix.c \
-    lib_c/motion_estimation/fullsearch_4pix_only.c
+    lib_c/motion_estimation/fullsearch_4pix_only.c \
+    lib_c/implab/img_psnr.c
