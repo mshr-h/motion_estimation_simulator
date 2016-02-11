@@ -58,6 +58,8 @@ int main_frame_process(int argc, char *argv[])
     printResult(img_curr, img_prev, fullsearch_4pix_only, "full4pixO");
     printResult(img_curr, img_prev, fullsearch_matching,  "fullmatch");
 
+    printf("%.2f sec\n",  (double)(clock()-start)/CLOCKS_PER_SEC);
+
     img_destruct(img_curr);
     img_destruct(img_prev);
 
