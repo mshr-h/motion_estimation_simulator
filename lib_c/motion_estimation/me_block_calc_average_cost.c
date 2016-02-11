@@ -7,7 +7,7 @@ double me_block_calc_average_cost(struct me_block_t *me_block)
     {
         for(w=0;w<me_block->mvec_table->wt;w++)
         {
-            sum+=me_block->mvec_table->data[h][w].cost;
+            sum+=me_block->mvec_table->data[h][w].cost_sad;
         }
     }
     return (double)sum/( me_block->mvec_table->ht * me_block->mvec_table->wt );

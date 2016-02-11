@@ -51,14 +51,14 @@ void fullsearch_filter_kernel(struct me_block_t *me_block, unsigned char (*pe)(u
                             +krnl[2][0]*sw_memory->data[lh+1][lw-1]+krnl[2][1]*sw_memory->data[lh+1][lw  ]+krnl[2][2]*sw_memory->data[lh+1][lw+1];
 
             // find the motion vector which has the lowest matching error
-            min_mvec.cost=MAX_SAD;
+            min_mvec.cost_sad=MAX_SAD;
             min_mvec.cost_match=0;
             min_mvec.cost_edge=MAX_SAD;
             for(cand_mvec.h=-sw_range; cand_mvec.h<=sw_range; cand_mvec.h++)
             {
                 for(cand_mvec.w=-sw_range; cand_mvec.w<=sw_range; cand_mvec.w++)
                 {
-                    cand_mvec.cost=0;
+                    cand_mvec.cost_sad=0;
                     cand_mvec.cost_match=0;
                     cand_mvec.cost_edge=0;
                     for(lh=0; lh<tb_size; lh++)
@@ -67,7 +67,7 @@ void fullsearch_filter_kernel(struct me_block_t *me_block, unsigned char (*pe)(u
                         {
                             curr_pix=tb_memory->data[lh][lw];
                             prev_pix=sw_memory->data[cand_mvec.h+sw_range+lh][cand_mvec.w+sw_range+lw];
-                            cand_mvec.cost+=pe(curr_pix, prev_pix);
+                            cand_mvec.cost_sad+=pe(curr_pix, prev_pix);
 
                             curr_edge_pix=tb_edge_memory->data[lh][lw];
                             prev_edge_pix=sw_edge_memory->data[cand_mvec.h+sw_range+lh][cand_mvec.w+sw_range+lw];
@@ -79,9 +79,9 @@ void fullsearch_filter_kernel(struct me_block_t *me_block, unsigned char (*pe)(u
                     }
 
                     // update the best mvec
-                    if(min_mvec.cost > cand_mvec.cost)
+                    if(min_mvec.cost_sad > cand_mvec.cost_sad)
                         min_mvec = cand_mvec;
-                    else if(min_mvec.cost == cand_mvec.cost)
+                    else if(min_mvec.cost_sad == cand_mvec.cost_sad)
                     {
                         if(min_mvec.cost_edge > cand_mvec.cost_edge)
                             min_mvec = cand_mvec;

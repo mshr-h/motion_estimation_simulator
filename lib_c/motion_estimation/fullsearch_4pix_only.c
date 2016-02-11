@@ -30,14 +30,14 @@ void fullsearch_4pix(struct me_block_t *me_block, unsigned char (*pe)(unsigned c
                     sw_memory->data[lh][lw]=me_block->prev_frame->data[tb_size*h+lh][tb_size*w+lw];
 
             // find the motion vector which has the lowest matching error
-            min_mvec.cost=MAX_SAD;
+            min_mvec.cost_sad=MAX_SAD;
             min_mvec.cost_match=0;
             min_mvec.cost_edge=-1;
             for(cand_mvec.h=-sw_range; cand_mvec.h<=sw_range; cand_mvec.h+=2)
             {
                 for(cand_mvec.w=-sw_range; cand_mvec.w<=sw_range; cand_mvec.w+=2)
                 {
-                    cand_mvec.cost=0;
+                    cand_mvec.cost_sad=0;
                     cand_mvec.cost_match=0;
                     cand_mvec.cost_edge=-1;
                     for(lh=0; lh<tb_size; lh++)
@@ -46,7 +46,7 @@ void fullsearch_4pix(struct me_block_t *me_block, unsigned char (*pe)(unsigned c
                         {
                             curr_pix=tb_memory->data[lh][lw];
                             prev_pix=sw_memory->data[cand_mvec.h+sw_range+lh][cand_mvec.w+sw_range+lw];
-                            cand_mvec.cost+=pe(curr_pix, prev_pix);
+                            cand_mvec.cost_sad+=pe(curr_pix, prev_pix);
 
                             if(curr_pix==prev_pix)
                                 cand_mvec.cost_match+=1;
@@ -54,7 +54,7 @@ void fullsearch_4pix(struct me_block_t *me_block, unsigned char (*pe)(unsigned c
                     }
 
                     // update the best mvec
-                    if(min_mvec.cost > cand_mvec.cost)
+                    if(min_mvec.cost_sad > cand_mvec.cost_sad)
                         min_mvec = cand_mvec;
                 }
             }
