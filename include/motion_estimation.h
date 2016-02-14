@@ -40,11 +40,12 @@ void mvec_table_destruct(struct mvec_table_t *mv_table);
 struct me_block_t *me_block_create(struct img_t *curr, struct img_t *prev, int sw_range, int tb_size);
 void me_block_destruct(struct me_block_t *me_block);
 struct img_t *me_block_reconstruct(struct me_block_t *me);
-double me_block_calc_average_cost(struct me_block_t *me_block);
+double me_block_calc_ave_cost_sad(struct me_block_t *me_block);
 int me_block_calc_sum_cost_match(struct me_block_t *me_block);
 
 void fullsearch(struct me_block_t *me, unsigned char (*pe)(unsigned char, unsigned char));
 void fullsearch_4pix(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char));
+void fullsearch_4pix_matching(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char));
 void fullsearch_4pix_only(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char));
 void fullsearch_filter_kernel(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char), int krnl[3][3]);
 void fullsearch_matching(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char));

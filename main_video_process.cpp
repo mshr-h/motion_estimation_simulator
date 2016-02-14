@@ -80,11 +80,11 @@ int main_video_process(int argc, char *argv[])
         fullsearch_matching     (me_block_fullsearch_matching, pe_8bit_diff       );
 
         fprintf(fp_out,"%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d\n", num_of_frame+2,
-               me_block_calc_average_cost(me_block_fullsearch),          me_block_calc_sum_cost_match(me_block_fullsearch),
-               me_block_calc_average_cost(me_block_fullsearch_edge1),    me_block_calc_sum_cost_match(me_block_fullsearch_edge1),
-               me_block_calc_average_cost(me_block_fullsearch_edge2),    me_block_calc_sum_cost_match(me_block_fullsearch_edge2),
-               me_block_calc_average_cost(me_block_fullsearch_edge3),    me_block_calc_sum_cost_match(me_block_fullsearch_edge3),
-               me_block_calc_average_cost(me_block_fullsearch_matching), me_block_calc_sum_cost_match(me_block_fullsearch_matching));
+               me_block_calc_ave_cost_sad(me_block_fullsearch),          me_block_calc_sum_cost_match(me_block_fullsearch),
+               me_block_calc_ave_cost_sad(me_block_fullsearch_edge1),    me_block_calc_sum_cost_match(me_block_fullsearch_edge1),
+               me_block_calc_ave_cost_sad(me_block_fullsearch_edge2),    me_block_calc_sum_cost_match(me_block_fullsearch_edge2),
+               me_block_calc_ave_cost_sad(me_block_fullsearch_edge3),    me_block_calc_sum_cost_match(me_block_fullsearch_edge3),
+               me_block_calc_ave_cost_sad(me_block_fullsearch_matching), me_block_calc_sum_cost_match(me_block_fullsearch_matching));
 
         me_block_destruct(me_block_fullsearch         );
         me_block_destruct(me_block_fullsearch_edge1   );

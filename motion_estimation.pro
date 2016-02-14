@@ -28,7 +28,6 @@ SOURCES += \
     lib_c/motion_estimation/processor_element/pe_diff.c \
     lib_c/motion_estimation/processor_element/pe_diff_exor.c \
     lib_c/motion_estimation/fullsearch.c \
-    lib_c/motion_estimation/me_block_calc_average_cost.c \
     lib_c/motion_estimation/me_block_create.c \
     lib_c/motion_estimation/me_block_destruct.c \
     lib_c/motion_estimation/me_block_reconstruct.c \
@@ -43,4 +42,6 @@ SOURCES += \
     lib_c/motion_estimation/fullsearch_4pix.c \
     lib_c/motion_estimation/fullsearch_4pix_only.c \
     lib_c/implab/img_psnr.c \
-    lib_c/implab/img_ssim.c
+    lib_c/implab/img_ssim.c \
+    lib_c/motion_estimation/fullsearch_4pix_matching.c \
+    lib_c/motion_estimation/me_block_calc_ave_cost_sad.c

@@ -8,7 +8,23 @@ void printResult(struct img_t *img_curr, struct img_t *img_prev, void (*method)(
     printf("%s: %6d, sad: %f, psnr: %f, ssim: %f\n",
            name,
            me_block_calc_sum_cost_match(me_block),
-           me_block_calc_average_cost(me_block),
+           me_block_calc_ave_cost_sad(me_block),
+           img_psnr(img_curr, img_rec),
+           img_ssim(img_curr, img_prev));
+    fflush(stdout);
+    img_destruct(img_rec);
+    me_block_destruct(me_block);
+}
+
+void printKrnlResult(struct img_t *img_curr, struct img_t *img_prev, void (*method)(struct me_block_t *, unsigned char (*)(unsigned char, unsigned char), int [3][3]), int krnl[3][3], const char *name)
+{
+    auto me_block=me_block_create(img_curr, img_prev, 16, 16);
+    method(me_block, pe_8bit_diff, krnl);
+    auto img_rec=me_block_reconstruct(me_block);
+    printf("%s: %6d, sad: %f, psnr: %f, ssim: %f\n",
+           name,
+           me_block_calc_sum_cost_match(me_block),
+           me_block_calc_ave_cost_sad(me_block),
            img_psnr(img_curr, img_rec),
            img_ssim(img_curr, img_prev));
     fflush(stdout);
@@ -53,12 +69,26 @@ int main_frame_process(int argc, char *argv[])
     img_yuv_destruct(curr_img_yuv);
     img_yuv_destruct(prev_img_yuv);
 
-    printResult(img_curr, img_prev, fullsearch,           "full     ");
-    printResult(img_curr, img_prev, fullsearch_4pix,      "full4pix ");
-    printResult(img_curr, img_prev, fullsearch_4pix_only, "full4pixO");
-    printResult(img_curr, img_prev, fullsearch_matching,  "fullmatch");
+    int krnl1[][3]={{ 0, 1, 0},
+                    { 1,-4, 1},
+                    { 0, 1, 0}};
+    int krnl2[][3]={{ 1, 1, 1},
+                    { 1,-8, 1},
+                    { 1, 1, 1}};
+    int krnl3[][3]={{ 1,-2, 1},
+                    {-2, 4,-2},
+                    { 1,-2, 1}};
 
-    printf("%.2f sec\n",  (double)(clock()-start)/CLOCKS_PER_SEC);
+    //printResult    (img_curr, img_prev, fullsearch,                      "full     ");
+    //printResult    (img_curr, img_prev, fullsearch_4pix,                 "full4pix ");
+    printResult    (img_curr, img_prev, fullsearch_4pix_matching,        "full4pixM");
+    //printResult    (img_curr, img_prev, fullsearch_4pix_only,            "full4pixO");
+    //printResult    (img_curr, img_prev, fullsearch_matching,             "fullmatch");
+    //printKrnlResult(img_curr, img_prev, fullsearch_filter_kernel, krnl1, "fullKrnl1");
+    //printKrnlResult(img_curr, img_prev, fullsearch_filter_kernel, krnl2, "fullKrnl2");
+    //printKrnlResult(img_curr, img_prev, fullsearch_filter_kernel, krnl3, "fullKrnl3");
+
+    printf("%.2f sec\n", (double)(clock()-start)/CLOCKS_PER_SEC);
 
     img_destruct(img_curr);
     img_destruct(img_prev);
