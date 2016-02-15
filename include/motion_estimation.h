@@ -51,7 +51,7 @@ void fullsearch_4pix_only         (struct me_block_t *me_block, unsigned char (*
 void fullsearch_4pix_only_kernel  (struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char), struct mvec_t (*update)(struct mvec_t, struct mvec_t), int krnl[3][3]);
 
 struct mvec_t compare_SAD         (struct mvec_t min_mvec, struct mvec_t cand_mvec);
-struct mvec_t compare_SAD_matching(struct mvec_t min_mvec, struct mvec_t cand_mvec);
+struct mvec_t compare_SAD_match(struct mvec_t min_mvec, struct mvec_t cand_mvec);
 struct mvec_t compare_SAD_minEdge (struct mvec_t min_mvec, struct mvec_t cand_mvec);
 struct mvec_t compare_SAD_maxEdge (struct mvec_t min_mvec, struct mvec_t cand_mvec);
 

@@ -77,7 +77,7 @@ int main_video_process(int argc, char *argv[])
         fullsearch_kernel(me_block_fullsearch_edge1   , pe_8bit_diff, compare_SAD         , krnl1);
         fullsearch_kernel(me_block_fullsearch_edge2   , pe_8bit_diff, compare_SAD         , krnl2);
         fullsearch_kernel(me_block_fullsearch_edge3   , pe_8bit_diff, compare_SAD         , krnl3);
-        fullsearch       (me_block_fullsearch_matching, pe_8bit_diff, compare_SAD_matching       );
+        fullsearch       (me_block_fullsearch_matching, pe_8bit_diff, compare_SAD_match       );
 
         fprintf(fp_out,"%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d\n", num_of_frame+2,
                me_block_calc_ave_cost_sad(me_block_fullsearch),          me_block_calc_sum_cost_match(me_block_fullsearch),
