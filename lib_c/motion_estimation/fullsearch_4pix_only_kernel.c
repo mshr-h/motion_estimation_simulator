@@ -1,6 +1,6 @@
 #include "include/motion_estimation.h"
 
-void fullsearch_filter_kernel(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char), int krnl[3][3])
+void fullsearch_4pix_only_kernel(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char), int krnl[3][3])
 {
     int h,w,lh,lw; // loop variables
     unsigned char curr_pix; // pixel value of current frame
@@ -54,9 +54,9 @@ void fullsearch_filter_kernel(struct me_block_t *me_block, unsigned char (*pe)(u
             min_mvec.cost_sad=MAX_SAD;
             min_mvec.cost_match=0;
             min_mvec.cost_edge=MAX_SAD;
-            for(cand_mvec.h=-sw_range; cand_mvec.h<=sw_range; cand_mvec.h++)
+            for(cand_mvec.h=-sw_range; cand_mvec.h<=sw_range; cand_mvec.h+=2)
             {
-                for(cand_mvec.w=-sw_range; cand_mvec.w<=sw_range; cand_mvec.w++)
+                for(cand_mvec.w=-sw_range; cand_mvec.w<=sw_range; cand_mvec.w+=2)
                 {
                     cand_mvec.cost_sad=0;
                     cand_mvec.cost_match=0;

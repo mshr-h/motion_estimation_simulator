@@ -74,9 +74,9 @@ int main_video_process(int argc, char *argv[])
         auto me_block_fullsearch_matching=me_block_create(img_curr, img_prev, 16, 16);
 
         fullsearch              (me_block_fullsearch,          pe_8bit_diff       );
-        fullsearch_filter_kernel(me_block_fullsearch_edge1,    pe_8bit_diff, krnl1);
-        fullsearch_filter_kernel(me_block_fullsearch_edge2,    pe_8bit_diff, krnl2);
-        fullsearch_filter_kernel(me_block_fullsearch_edge3,    pe_8bit_diff, krnl3);
+        fullsearch_kernel(me_block_fullsearch_edge1,    pe_8bit_diff, krnl1);
+        fullsearch_kernel(me_block_fullsearch_edge2,    pe_8bit_diff, krnl2);
+        fullsearch_kernel(me_block_fullsearch_edge3,    pe_8bit_diff, krnl3);
         fullsearch_matching     (me_block_fullsearch_matching, pe_8bit_diff       );
 
         fprintf(fp_out,"%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d\n", num_of_frame+2,
