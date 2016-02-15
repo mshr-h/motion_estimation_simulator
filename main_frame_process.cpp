@@ -1,12 +1,21 @@
 #include "include/main.h"
 
-void printResult(const char *method_name, const char *update_name, struct img_t *img_curr, struct img_t *img_prev,
-                 void (*search)(struct me_block_t *, unsigned char (*)(unsigned char, unsigned char)))
+void printResult
+(
+        const char *method_name,
+        const char *update_name,
+        struct img_t *img_curr,
+        struct img_t *img_prev,
+        int sw_range,
+        int tb_size,
+        void (*search)(struct me_block_t *, unsigned char (*)(unsigned char, unsigned char), struct mvec_t (*)(struct mvec_t, struct mvec_t)),
+        struct mvec_t (*update)(struct mvec_t, struct mvec_t)
+)
 {
-    auto me_block=me_block_create(img_curr, img_prev, 16, 16);
-    search(me_block, pe_8bit_diff);
+    auto me_block=me_block_create(img_curr, img_prev, sw_range, tb_size);
+    search(me_block, pe_8bit_diff, update);
     auto img_rec=me_block_reconstruct(me_block);
-    printf("%s\t%s\t%d\t%f\t%f\t%f\n",
+    printf("%s\t%s\t%d\t%f\t%f\n",
            method_name,
            update_name,
            me_block_calc_sum_cost_match(me_block),
@@ -17,13 +26,23 @@ void printResult(const char *method_name, const char *update_name, struct img_t 
     me_block_destruct(me_block);
 }
 
-void printKrnlResult(const char *method_name, const char *update_name, struct img_t *img_curr, struct img_t *img_prev,
-                     void (*search)(struct me_block_t *, unsigned char (*)(unsigned char, unsigned char), int [3][3]), int krnl[3][3])
+void printKrnlResult
+(
+        const char *method_name,
+        const char *update_name,
+        struct img_t *img_curr,
+        struct img_t *img_prev,
+        int sw_range,
+        int tb_size,
+        void (*search)(struct me_block_t *, unsigned char (*)(unsigned char, unsigned char), struct mvec_t (*)(struct mvec_t, struct mvec_t), int [3][3]),
+        struct mvec_t (*update)(struct mvec_t, struct mvec_t),
+        int krnl[3][3]
+)
 {
-    auto me_block=me_block_create(img_curr, img_prev, 16, 16);
-    search(me_block, pe_8bit_diff, krnl);
+    auto me_block=me_block_create(img_curr, img_prev, sw_range, tb_size);
+    search(me_block, pe_8bit_diff, update, krnl);
     auto img_rec=me_block_reconstruct(me_block);
-    printf("%s\t%s\t%d\t%f\t%f\t%f\n",
+    printf("%s\t%s\t%d\t%f\t%f\n",
            method_name,
            update_name,
            me_block_calc_sum_cost_match(me_block),
@@ -80,18 +99,21 @@ int main_frame_process(int argc, char *argv[])
     int krnl3[][3]={{ 1,-2, 1},
                     {-2, 4,-2},
                     { 1,-2, 1}};
+    int sw_range=4;
+    int tb_size=4;
 
+    printf("SW\t%d\tTB\t%d\n", sw_range, tb_size);
     printf("method\tupdate\tmatch\tsad\tpsnr\n");
-    printResult    ("fullsearch" , "SAD"         , img_curr, img_prev, fullsearch                          );
-    printResult    ("fullsearch" , "SAD+matching", img_curr, img_prev, fullsearch_matching                 );
-    printKrnlResult("fullsearch" , "SAD+kernel1" , img_curr, img_prev, fullsearch_kernel            , krnl1);
-    printKrnlResult("fullsearch" , "SAD+kernel2" , img_curr, img_prev, fullsearch_kernel            , krnl2);
-    printKrnlResult("fullsearch" , "SAD+kernel2" , img_curr, img_prev, fullsearch_kernel            , krnl3);
-    printResult    ("4pix search", "SAD"         , img_curr, img_prev, fullsearch_4pix                     );
-    printResult    ("4pix search", "SAD+matching", img_curr, img_prev, fullsearch_4pix_matching            );
-    printKrnlResult("4pix search", "SAD+kernel1" , img_curr, img_prev, fullsearch_4pix_kernel       , krnl1);
-    printKrnlResult("4pix search", "SAD+kernel2" , img_curr, img_prev, fullsearch_4pix_kernel       , krnl2);
-    printKrnlResult("4pix search", "SAD+kernel2" , img_curr, img_prev, fullsearch_4pix_kernel       , krnl3);
+    printResult    ("fullsearch" , "SAD"         , img_curr, img_prev, sw_range, tb_size, fullsearch            , compare_SAD                );
+    printResult    ("fullsearch" , "SAD+matching", img_curr, img_prev, sw_range, tb_size, fullsearch            , compare_SAD_matching       );
+    printKrnlResult("fullsearch" , "SAD+kernel1" , img_curr, img_prev, sw_range, tb_size, fullsearch_kernel     , compare_SAD_minEdge , krnl1);
+    printKrnlResult("fullsearch" , "SAD+kernel2" , img_curr, img_prev, sw_range, tb_size, fullsearch_kernel     , compare_SAD_minEdge , krnl2);
+    printKrnlResult("fullsearch" , "SAD+kernel2" , img_curr, img_prev, sw_range, tb_size, fullsearch_kernel     , compare_SAD_minEdge , krnl3);
+    printResult    ("4pix search", "SAD"         , img_curr, img_prev, sw_range, tb_size, fullsearch_4pix       , compare_SAD                );
+    printResult    ("4pix search", "SAD+matching", img_curr, img_prev, sw_range, tb_size, fullsearch_4pix       , compare_SAD_matching       );
+    printKrnlResult("4pix search", "SAD+kernel1" , img_curr, img_prev, sw_range, tb_size, fullsearch_4pix_kernel, compare_SAD_minEdge , krnl1);
+    printKrnlResult("4pix search", "SAD+kernel2" , img_curr, img_prev, sw_range, tb_size, fullsearch_4pix_kernel, compare_SAD_minEdge , krnl2);
+    printKrnlResult("4pix search", "SAD+kernel2" , img_curr, img_prev, sw_range, tb_size, fullsearch_4pix_kernel, compare_SAD_minEdge , krnl3);
 
     printf("%.2f sec\n", (double)(clock()-start)/CLOCKS_PER_SEC);
 

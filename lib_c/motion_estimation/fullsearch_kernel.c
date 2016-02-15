@@ -1,6 +1,6 @@
 #include "include/motion_estimation.h"
 
-void fullsearch_kernel(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char), int krnl[3][3])
+void fullsearch_kernel(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char), struct mvec_t (*update)(struct mvec_t, struct mvec_t), int krnl[3][3])
 {
     int h,w,lh,lw; // loop variables
     unsigned char curr_pix; // pixel value of current frame
@@ -79,13 +79,7 @@ void fullsearch_kernel(struct me_block_t *me_block, unsigned char (*pe)(unsigned
                     }
 
                     // update the best mvec
-                    if(min_mvec.cost_sad > cand_mvec.cost_sad)
-                        min_mvec = cand_mvec;
-                    else if(min_mvec.cost_sad == cand_mvec.cost_sad)
-                    {
-                        if(min_mvec.cost_edge < cand_mvec.cost_edge)
-                            min_mvec = cand_mvec;
-                    }
+                    min_mvec = update(min_mvec, cand_mvec);
                 }
             }
 

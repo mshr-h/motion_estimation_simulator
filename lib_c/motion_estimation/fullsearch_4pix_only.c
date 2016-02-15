@@ -1,6 +1,6 @@
 #include "include/motion_estimation.h"
 
-void fullsearch_4pix_only(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char))
+void fullsearch_4pix_only(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char), struct mvec_t (*update)(struct mvec_t, struct mvec_t))
 {
     int h,w,lh,lw; // loop variables
     unsigned char curr_pix; // pixel value of current frame
@@ -54,8 +54,7 @@ void fullsearch_4pix_only(struct me_block_t *me_block, unsigned char (*pe)(unsig
                     }
 
                     // update the best mvec
-                    if(min_mvec.cost_sad > cand_mvec.cost_sad)
-                        min_mvec = cand_mvec;
+                    min_mvec = update(min_mvec, cand_mvec);
                 }
             }
 

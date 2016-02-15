@@ -73,11 +73,11 @@ int main_video_process(int argc, char *argv[])
         auto me_block_fullsearch_edge3   =me_block_create(img_curr, img_prev, 16, 16);
         auto me_block_fullsearch_matching=me_block_create(img_curr, img_prev, 16, 16);
 
-        fullsearch              (me_block_fullsearch,          pe_8bit_diff       );
-        fullsearch_kernel(me_block_fullsearch_edge1,    pe_8bit_diff, krnl1);
-        fullsearch_kernel(me_block_fullsearch_edge2,    pe_8bit_diff, krnl2);
-        fullsearch_kernel(me_block_fullsearch_edge3,    pe_8bit_diff, krnl3);
-        fullsearch_matching     (me_block_fullsearch_matching, pe_8bit_diff       );
+        fullsearch       (me_block_fullsearch         , pe_8bit_diff, compare_SAD                );
+        fullsearch_kernel(me_block_fullsearch_edge1   , pe_8bit_diff, compare_SAD         , krnl1);
+        fullsearch_kernel(me_block_fullsearch_edge2   , pe_8bit_diff, compare_SAD         , krnl2);
+        fullsearch_kernel(me_block_fullsearch_edge3   , pe_8bit_diff, compare_SAD         , krnl3);
+        fullsearch       (me_block_fullsearch_matching, pe_8bit_diff, compare_SAD_matching       );
 
         fprintf(fp_out,"%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d\n", num_of_frame+2,
                me_block_calc_ave_cost_sad(me_block_fullsearch),          me_block_calc_sum_cost_match(me_block_fullsearch),

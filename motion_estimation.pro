@@ -37,14 +37,12 @@ SOURCES += \
     lib_qc/img_to_QImage.cpp \
     lib_qc/QImage_to_img_rgb.cpp \
     lib_c/motion_estimation/me_block_calc_sum_cost_match.c \
-    lib_c/motion_estimation/fullsearch_matching.c \
     lib_c/motion_estimation/fullsearch_4pix.c \
     lib_c/motion_estimation/fullsearch_4pix_only.c \
     lib_c/implab/img_psnr.c \
     lib_c/implab/img_ssim.c \
-    lib_c/motion_estimation/fullsearch_4pix_matching.c \
     lib_c/motion_estimation/me_block_calc_ave_cost_sad.c \
     lib_c/motion_estimation/fullsearch_4pix_kernel.c \
     lib_c/motion_estimation/fullsearch_kernel.c \
-    lib_c/motion_estimation/fullsearch_4pix_only_matching.c \
-    lib_c/motion_estimation/fullsearch_4pix_only_kernel.c
+    lib_c/motion_estimation/fullsearch_4pix_only_kernel.c \
+    lib_c/motion_estimation/update_minvec.c

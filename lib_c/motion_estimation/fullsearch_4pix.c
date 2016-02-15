@@ -1,6 +1,6 @@
 #include "include/motion_estimation.h"
 
-void fullsearch_4pix(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char))
+void fullsearch_4pix(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char), struct mvec_t (*update)(struct mvec_t, struct mvec_t))
 {
     int h,w,lh,lw; // loop variables
     unsigned char curr_pix; // pixel value of current frame
@@ -55,16 +55,15 @@ void fullsearch_4pix(struct me_block_t *me_block, unsigned char (*pe)(unsigned c
                     }
 
                     // update the best mvec
-                    if(min_mvec.cost_sad > cand_mvec.cost_sad)
-                        min_mvec = cand_mvec;
+                    min_mvec = update(min_mvec, cand_mvec);
                 }
             }
 
             min_mvec2p=min_mvec;
 
             // normalize minimum mvec
-            min_mvec2p.h=MAX(MIN(min_mvec2p.h,15),-15);
-            min_mvec2p.w=MAX(MIN(min_mvec2p.w,15),-15);
+            min_mvec2p.h=MAX(MIN(min_mvec2p.h,sw_range-1),1-sw_range);
+            min_mvec2p.w=MAX(MIN(min_mvec2p.w,sw_range-1),1-sw_range);
 
             // search in integer accuracy mode
             min_mvec.cost_sad=MAX_SAD;
@@ -91,8 +90,7 @@ void fullsearch_4pix(struct me_block_t *me_block, unsigned char (*pe)(unsigned c
                     }
 
                     // update the best mvec
-                    if(min_mvec.cost_sad > cand_mvec.cost_sad)
-                        min_mvec = cand_mvec;
+                    min_mvec = compare_SAD(min_mvec, cand_mvec);
                 }
             }
 
