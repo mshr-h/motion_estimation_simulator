@@ -79,14 +79,14 @@ int main_frame_process(int argc, char *argv[])
                     {-2, 4,-2},
                     { 1,-2, 1}};
 
-    //printResult    (img_curr, img_prev, fullsearch,                      "full     ");
-    //printResult    (img_curr, img_prev, fullsearch_4pix,                 "full4pix ");
+    printResult    (img_curr, img_prev, fullsearch,                      "full     ");
+    printResult    (img_curr, img_prev, fullsearch_4pix,                 "full4pix ");
     printResult    (img_curr, img_prev, fullsearch_4pix_matching,        "full4pixM");
-    //printResult    (img_curr, img_prev, fullsearch_4pix_only,            "full4pixO");
-    //printResult    (img_curr, img_prev, fullsearch_matching,             "fullmatch");
-    //printKrnlResult(img_curr, img_prev, fullsearch_filter_kernel, krnl1, "fullKrnl1");
-    //printKrnlResult(img_curr, img_prev, fullsearch_filter_kernel, krnl2, "fullKrnl2");
-    //printKrnlResult(img_curr, img_prev, fullsearch_filter_kernel, krnl3, "fullKrnl3");
+    printResult    (img_curr, img_prev, fullsearch_4pix_only,            "full4pixO");
+    printResult    (img_curr, img_prev, fullsearch_matching,             "fullmatch");
+    printKrnlResult(img_curr, img_prev, fullsearch_filter_kernel, krnl1, "fullKrnl1");
+    printKrnlResult(img_curr, img_prev, fullsearch_filter_kernel, krnl2, "fullKrnl2");
+    printKrnlResult(img_curr, img_prev, fullsearch_filter_kernel, krnl3, "fullKrnl3");
 
     printf("%.2f sec\n", (double)(clock()-start)/CLOCKS_PER_SEC);
 
