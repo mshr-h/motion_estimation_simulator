@@ -1,10 +1,10 @@
 #include "include/motion_estimation.h"
 
-void fullsearch_4pix_only(struct me_block_t *me_block, unsigned char (*pe)(unsigned char, unsigned char), struct mvec_t (*update)(struct mvec_t, struct mvec_t))
+void fullsearch_4pix_only(struct me_block_t *me_block, uint8_t (*pe)(uint8_t, uint8_t), struct mvec_t (*update)(struct mvec_t, struct mvec_t))
 {
     int h,w,lh,lw; // loop variables
-    unsigned char curr_pix; // pixel value of current frame
-    unsigned char prev_pix; // pixel value of previous frame
+    uint8_t curr_pix; // pixel value of current frame
+    uint8_t prev_pix; // pixel value of previous frame
     struct mvec_t cand_mvec; // candidate motion vector
     struct mvec_t min_mvec; // minimum motion vector
     struct img_t *sw_memory;

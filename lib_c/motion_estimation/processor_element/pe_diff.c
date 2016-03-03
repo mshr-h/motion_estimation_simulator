@@ -1,6 +1,6 @@
 #include"include/processor_element.h"
 
-unsigned char pe_1bit_diff(unsigned char a, unsigned char b)
+uint8_t pe_1bit_diff(uint8_t a, uint8_t b)
 {
     int ret;
     ret=abs( ((a>>7)&0x1)-((b>>7)&0x1) );
@@ -8,10 +8,10 @@ unsigned char pe_1bit_diff(unsigned char a, unsigned char b)
     assert(ret>=0);
     assert(ret<=0x1);
 #endif
-    return (unsigned char)ret;
+    return (uint8_t)ret;
 }
 
-unsigned char pe_2bit_diff(unsigned char a, unsigned char b)
+uint8_t pe_2bit_diff(uint8_t a, uint8_t b)
 {
     int ret;
     ret=abs( ((a>>6)&0x3)-((b>>6)&0x3) );
@@ -19,10 +19,10 @@ unsigned char pe_2bit_diff(unsigned char a, unsigned char b)
     assert(ret>=0);
     assert(ret<=0x3);
 #endif
-    return (unsigned char)ret;
+    return (uint8_t)ret;
 }
 
-unsigned char pe_3bit_diff(unsigned char a, unsigned char b)
+uint8_t pe_3bit_diff(uint8_t a, uint8_t b)
 {
     int ret;
     ret=abs( ((a>>5)&0x7)-((b>>5)&0x7) );
@@ -30,10 +30,10 @@ unsigned char pe_3bit_diff(unsigned char a, unsigned char b)
     assert(ret>=0);
     assert(ret<=0x7);
 #endif
-    return (unsigned char)ret;
+    return (uint8_t)ret;
 }
 
-unsigned char pe_4bit_diff(unsigned char a, unsigned char b)
+uint8_t pe_4bit_diff(uint8_t a, uint8_t b)
 {
     int ret;
     ret=abs( ((a>>4)&0xf)-((b>>4)&0xf) );
@@ -41,10 +41,10 @@ unsigned char pe_4bit_diff(unsigned char a, unsigned char b)
     assert(ret>=0);
     assert(ret<=0xF);
 #endif
-    return (unsigned char)ret;
+    return (uint8_t)ret;
 }
 
-unsigned char pe_5bit_diff(unsigned char a, unsigned char b)
+uint8_t pe_5bit_diff(uint8_t a, uint8_t b)
 {
     int ret;
     ret=abs( ((a>>3)&0x1f)-((b>>3)&0x1f) );
@@ -52,10 +52,10 @@ unsigned char pe_5bit_diff(unsigned char a, unsigned char b)
     assert(ret>=0);
     assert(ret<=0x1F);
 #endif
-    return (unsigned char)ret;
+    return (uint8_t)ret;
 }
 
-unsigned char pe_6bit_diff(unsigned char a, unsigned char b)
+uint8_t pe_6bit_diff(uint8_t a, uint8_t b)
 {
     int ret;
     ret=abs( ((a>>2)&0x3f)-((b>>2)&0x3f) );
@@ -63,10 +63,10 @@ unsigned char pe_6bit_diff(unsigned char a, unsigned char b)
     assert(ret>=0);
     assert(ret<=0x3F);
 #endif
-    return (unsigned char)ret;
+    return (uint8_t)ret;
 }
 
-unsigned char pe_7bit_diff(unsigned char a, unsigned char b)
+uint8_t pe_7bit_diff(uint8_t a, uint8_t b)
 {
     int ret;
     ret=abs( ((a>>1)&0x7f)-((b>>1)&0x7f) );
@@ -74,10 +74,10 @@ unsigned char pe_7bit_diff(unsigned char a, unsigned char b)
     assert(ret>=0);
     assert(ret<=0x7F);
 #endif
-    return (unsigned char)ret;
+    return (uint8_t)ret;
 }
 
-unsigned char pe_8bit_diff(unsigned char a, unsigned char b)
+uint8_t pe_8bit_diff(uint8_t a, uint8_t b)
 {
     int ret;
     ret=abs(a-b);
@@ -85,5 +85,5 @@ unsigned char pe_8bit_diff(unsigned char a, unsigned char b)
     assert(ret>=0);
     assert(ret<=0xFF);
 #endif
-    return (unsigned char)ret;
+    return (uint8_t)ret;
 }

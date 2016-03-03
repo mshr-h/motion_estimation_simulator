@@ -4,7 +4,7 @@ struct img_t *
         img_create(
         int wt,
         int ht,
-        unsigned char init
+        uint8_t init
         )
 {
     struct img_t *new_img;

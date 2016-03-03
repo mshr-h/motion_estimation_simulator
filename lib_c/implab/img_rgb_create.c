@@ -4,7 +4,7 @@ struct img_rgb_t *
         img_rgb_create(
         int wt,
         int ht,
-        unsigned char init
+        uint8_t init
         )
 {
     struct img_rgb_t *new_img;

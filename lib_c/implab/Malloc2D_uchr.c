@@ -1,21 +1,21 @@
 #include  "include/implab.h"
 
-unsigned char **
+uint8_t **
 Malloc2D_uchr(
         int wt,
         int ht,
-        unsigned char init
+        uint8_t init
         )
 {
     int h,w;
-    unsigned char **x;
+    uint8_t **x;
 
-    x=(unsigned char **)malloc(sizeof(void *)*ht);
+    x=(uint8_t **)malloc(sizeof(void *)*ht);
     if(x==NULL){
         printf("malloc failed (%s,%i)\n",__FILE__,__LINE__);
         exit(-1);
     }
-    x[0]=(unsigned char *)malloc(sizeof(unsigned char)*ht*wt);
+    x[0]=(uint8_t *)malloc(sizeof(uint8_t)*ht*wt);
     if(x[0]==NULL){
         printf("malloc failed (%s,%i)\n",__FILE__,__LINE__);
         exit(-1);

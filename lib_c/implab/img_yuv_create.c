@@ -4,7 +4,7 @@ struct img_yuv_t *
         img_yuv_create(
         int wt,
         int ht,
-        unsigned char init
+        uint8_t init
         )
 {
     struct img_yuv_t *img;

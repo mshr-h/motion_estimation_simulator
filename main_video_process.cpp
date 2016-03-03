@@ -30,7 +30,7 @@ int main_video_process(int argc, char *argv[])
     struct img_yuv_t *frame=img_yuv_create(width, height, 0);
     struct img_yuv_t *tmp;
 
-    unsigned char *frame_buf=(unsigned char *)malloc(sizeof(unsigned char)*frame_bytes);
+    uint8_t *frame_buf=(uint8_t *)malloc(sizeof(uint8_t)*frame_bytes);
     fread(frame_buf, 1, frame_bytes, fp_in);
     buf_to_img_yuv(frame_buf,frame_prev);
 

@@ -1,6 +1,6 @@
 #include  "include/implab.h"
 
-void buf_to_img_yuv(unsigned char *frame_buf, struct img_yuv_t *frame)
+void buf_to_img_yuv(uint8_t *frame_buf, struct img_yuv_t *frame)
 {
     int w,h;
     int total=frame->wt*frame->ht;

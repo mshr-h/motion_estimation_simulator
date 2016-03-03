@@ -6,7 +6,7 @@ struct img_t *me_block_reconstruct(struct me_block_t *me)
     int h,w,lh,lw;
     int sw_range=me->sw_range;
     int tb_size=me->tb_size;
-    unsigned char prev_pixel;
+    uint8_t prev_pixel;
 
     img=img_create(me->curr_frame->wt, me->curr_frame->ht, 0);
 

@@ -1,6 +1,6 @@
 #include  "include/implab.h"
 
-struct img_t *img_copy(int wt, int ht, unsigned char **data)
+struct img_t *img_copy(int wt, int ht, uint8_t **data)
 {
     struct img_t *new_img = img_create(wt, ht, 0);
     int h, w;

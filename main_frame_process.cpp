@@ -7,8 +7,8 @@ void printResult
         struct img_t *img_prev,
         int sw_range,
         int tb_size,
-        void (*search)(struct me_block_t *, unsigned char (*)(unsigned char, unsigned char), struct mvec_t (*)(struct mvec_t, struct mvec_t)),
-        unsigned char (*pe)(unsigned char, unsigned char),
+        void (*search)(struct me_block_t *, uint8_t (*)(uint8_t, uint8_t), struct mvec_t (*)(struct mvec_t, struct mvec_t)),
+        uint8_t (*pe)(uint8_t, uint8_t),
         struct mvec_t (*update)(struct mvec_t, struct mvec_t)
 )
 {
@@ -32,8 +32,8 @@ void printKrnlResult
         struct img_t *img_prev,
         int sw_range,
         int tb_size,
-        void (*search)(struct me_block_t *, unsigned char (*)(unsigned char, unsigned char), struct mvec_t (*)(struct mvec_t, struct mvec_t), int [3][3]),
-        unsigned char (*pe)(unsigned char, unsigned char),
+        void (*search)(struct me_block_t *, uint8_t (*)(uint8_t, uint8_t), struct mvec_t (*)(struct mvec_t, struct mvec_t), int [3][3]),
+        uint8_t (*pe)(uint8_t, uint8_t),
         struct mvec_t (*update)(struct mvec_t, struct mvec_t),
         int krnl[3][3]
 )

@@ -1,6 +1,6 @@
 #include"include/processor_element.h"
 
-unsigned char pe_2bit_diff_6bit_exor(unsigned char a, unsigned char b)
+uint8_t pe_2bit_diff_6bit_exor(uint8_t a, uint8_t b)
 {
     int ret,upper_2bit,lower_6bit;
     upper_2bit=abs( ((a>>6)&0x3) - ((b>>6)&0x3) );
@@ -14,10 +14,10 @@ unsigned char pe_2bit_diff_6bit_exor(unsigned char a, unsigned char b)
     assert(ret>=0);
     assert(ret<=0xFF);
 #endif
-    return (unsigned char)ret;
+    return (uint8_t)ret;
 }
 
-unsigned char pe_3bit_diff_5bit_exor(unsigned char a, unsigned char b)
+uint8_t pe_3bit_diff_5bit_exor(uint8_t a, uint8_t b)
 {
     int ret,upper_3bit,lower_5bit;
     upper_3bit=abs( ((a>>5)&0x7) - ((b>>5)&0x7) );
@@ -31,10 +31,10 @@ unsigned char pe_3bit_diff_5bit_exor(unsigned char a, unsigned char b)
     assert(ret>=0);
     assert(ret<=0xFF);
 #endif
-    return (unsigned char)ret;
+    return (uint8_t)ret;
 }
 
-unsigned char pe_4bit_diff_4bit_exor(unsigned char a, unsigned char b)
+uint8_t pe_4bit_diff_4bit_exor(uint8_t a, uint8_t b)
 {
     int ret,upper_4bit,lower_4bit;
     upper_4bit=abs( ((a>>4)&0xF) - ((b>>4)&0xF) );
@@ -48,10 +48,10 @@ unsigned char pe_4bit_diff_4bit_exor(unsigned char a, unsigned char b)
     assert(ret>=0);
     assert(ret<=0xFF);
 #endif
-    return (unsigned char)ret;
+    return (uint8_t)ret;
 }
 
-unsigned char pe_5bit_diff_3bit_exor(unsigned char a, unsigned char b)
+uint8_t pe_5bit_diff_3bit_exor(uint8_t a, uint8_t b)
 {
     int ret,upper_5bit,lower_3bit;
     upper_5bit=abs( ((a>>3)&0x1F) - ((b>>3)&0x1F) );
@@ -65,10 +65,10 @@ unsigned char pe_5bit_diff_3bit_exor(unsigned char a, unsigned char b)
     assert(ret>=0);
     assert(ret<=0xFF);
 #endif
-    return (unsigned char)ret;
+    return (uint8_t)ret;
 }
 
-unsigned char pe_6bit_diff_2bit_exor(unsigned char a, unsigned char b)
+uint8_t pe_6bit_diff_2bit_exor(uint8_t a, uint8_t b)
 {
     int ret,upper_6bit,lower_2bit;
     upper_6bit=abs( ((a>>2)&0x3F) - ((b>>2)&0x3F) );
@@ -82,5 +82,5 @@ unsigned char pe_6bit_diff_2bit_exor(unsigned char a, unsigned char b)
     assert(ret>=0);
     assert(ret<=0xFF);
 #endif
-    return (unsigned char)ret;
+    return (uint8_t)ret;
 }
