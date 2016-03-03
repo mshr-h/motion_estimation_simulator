@@ -61,32 +61,32 @@ int main_frame_process(int argc, char *argv[])
 
     clock_t start=clock();
 
-    QImage prev_qimg(argv[1]);
-    if(prev_qimg.isNull())
+    QImage ref_qimg(argv[1]);
+    if(ref_qimg.isNull())
     {
         printf("couldn't open %s\n", argv[1]);
         exit(1);
     }
 
-    QImage curr_qimg(argv[2]);
-    if(curr_qimg.isNull())
+    QImage cur_qimg(argv[2]);
+    if(cur_qimg.isNull())
     {
         printf("couldn't open %s\n", argv[2]);
         exit(1);
     }
 
-    auto curr_img_rgb=QImage_to_img_rgb(&curr_qimg);
-    auto prev_img_rgb=QImage_to_img_rgb(&prev_qimg);
+    auto cur_img_rgb=QImage_to_img_rgb(&cur_qimg);
+    auto ref_img_rgb=QImage_to_img_rgb(&ref_qimg);
 
-    auto curr_img_yuv=img_rgb_to_yuv(curr_img_rgb);
-    auto prev_img_yuv=img_rgb_to_yuv(prev_img_rgb);
-    img_rgb_destruct(curr_img_rgb);
-    img_rgb_destruct(prev_img_rgb);
+    auto cur_img_yuv=img_rgb_to_yuv(cur_img_rgb);
+    auto ref_img_yuv=img_rgb_to_yuv(ref_img_rgb);
+    img_rgb_destruct(cur_img_rgb);
+    img_rgb_destruct(ref_img_rgb);
 
-    auto img_curr=img_copy(curr_img_yuv->wt,curr_img_yuv->ht,curr_img_yuv->y);
-    auto img_prev=img_copy(prev_img_yuv->wt,prev_img_yuv->ht,prev_img_yuv->y);
-    img_yuv_destruct(curr_img_yuv);
-    img_yuv_destruct(prev_img_yuv);
+    auto img_curr=img_copy(cur_img_yuv->wt,cur_img_yuv->ht,cur_img_yuv->y);
+    auto img_prev=img_copy(ref_img_yuv->wt,ref_img_yuv->ht,ref_img_yuv->y);
+    img_yuv_destruct(cur_img_yuv);
+    img_yuv_destruct(ref_img_yuv);
 
     int krnl1[][3]={{ 0, 1, 0},
                     { 1,-4, 1},

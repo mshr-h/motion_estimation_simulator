@@ -11,15 +11,15 @@ struct me_block_t *me_block_create(struct img_t *curr, struct img_t *prev, int s
     me_block->sw_range=sw_range;
     me_block->tb_size=tb_size;
 
-    me_block->curr_frame=img_copy(curr->wt,curr->ht,curr->data);
-    me_block->prev_frame=img_copy(prev->wt,prev->ht,prev->data);
+    me_block->cur_frame=img_copy(curr->wt,curr->ht,curr->data);
+    me_block->ref_frame=img_copy(prev->wt,prev->ht,prev->data);
 
     mv_table_h=0;
-    for(h=sw_range; (h+tb_size+sw_range)<me_block->curr_frame->ht; h+=tb_size)
+    for(h=sw_range; (h+tb_size+sw_range)<me_block->cur_frame->ht; h+=tb_size)
         mv_table_h++;
 
     mv_table_w=0;
-    for(w=sw_range; (w+tb_size+sw_range)<me_block->curr_frame->wt; w+=tb_size)
+    for(w=sw_range; (w+tb_size+sw_range)<me_block->cur_frame->wt; w+=tb_size)
         mv_table_w++;
 
 

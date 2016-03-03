@@ -3,10 +3,10 @@
 void fullsearch_kernel(struct me_block_t *me_block, uint8_t (*pe)(uint8_t, uint8_t), struct mvec_t (*update)(struct mvec_t, struct mvec_t), int krnl[3][3])
 {
     int h,w,lh,lw; // loop variables
-    uint8_t curr_pix; // pixel value of current frame
-    uint8_t prev_pix; // pixel value of previous frame
-    uint8_t curr_edge_pix; // pixel value of current edged frame
-    uint8_t prev_edge_pix; // pixel value of previous edged frame
+    uint8_t cur_pix; // pixel value of current frame
+    uint8_t ref_pix; // pixel value of previous frame
+    uint8_t cur_edge_pix; // pixel value of current edged frame
+    uint8_t ref_edge_pix; // pixel value of previous edged frame
     struct mvec_t cand_mvec; // candidate motion vector
     struct mvec_t min_mvec; // minimum motion vector
     struct img_t *sw_memory;
@@ -29,11 +29,11 @@ void fullsearch_kernel(struct me_block_t *me_block, uint8_t (*pe)(uint8_t, uint8
             // copy tb and sw
             for(lh=0; lh<tb_memory->ht; lh++)
                 for(lw=0; lw<tb_memory->wt; lw++)
-                    tb_memory->data[lh][lw]=me_block->curr_frame->data[sw_range+tb_size*h+lh][sw_range+tb_size*w+lw];
+                    tb_memory->data[lh][lw]=me_block->cur_frame->data[sw_range+tb_size*h+lh][sw_range+tb_size*w+lw];
 
             for(lh=0; lh<sw_memory->ht; lh++)
                 for(lw=0; lw<sw_memory->wt; lw++)
-                    sw_memory->data[lh][lw]=me_block->prev_frame->data[tb_size*h+lh][tb_size*w+lw];
+                    sw_memory->data[lh][lw]=me_block->ref_frame->data[tb_size*h+lh][tb_size*w+lw];
 
             // compute edge images
             for(lh=1; lh<tb_memory->ht-1; lh++)
@@ -65,15 +65,15 @@ void fullsearch_kernel(struct me_block_t *me_block, uint8_t (*pe)(uint8_t, uint8
                     {
                         for(lw=0; lw<tb_size; lw++)
                         {
-                            curr_pix=tb_memory->data[lh][lw];
-                            prev_pix=sw_memory->data[cand_mvec.h+sw_range+lh][cand_mvec.w+sw_range+lw];
-                            cand_mvec.cost_sad+=pe(curr_pix, prev_pix);
+                            cur_pix=tb_memory->data[lh][lw];
+                            ref_pix=sw_memory->data[cand_mvec.h+sw_range+lh][cand_mvec.w+sw_range+lw];
+                            cand_mvec.cost_sad+=pe(cur_pix, ref_pix);
 
-                            curr_edge_pix=tb_edge_memory->data[lh][lw];
-                            prev_edge_pix=sw_edge_memory->data[cand_mvec.h+sw_range+lh][cand_mvec.w+sw_range+lw];
-                            cand_mvec.cost_edge+=abs(curr_edge_pix-prev_edge_pix);
+                            cur_edge_pix=tb_edge_memory->data[lh][lw];
+                            ref_edge_pix=sw_edge_memory->data[cand_mvec.h+sw_range+lh][cand_mvec.w+sw_range+lw];
+                            cand_mvec.cost_edge+=abs(cur_edge_pix-ref_edge_pix);
 
-                            if(curr_pix==prev_pix)
+                            if(cur_pix==ref_pix)
                                 cand_mvec.cost_match+=1;
                         }
                     }

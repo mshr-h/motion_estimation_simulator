@@ -6,9 +6,9 @@ struct img_t *me_block_reconstruct(struct me_block_t *me)
     int h,w,lh,lw;
     int sw_range=me->sw_range;
     int tb_size=me->tb_size;
-    uint8_t prev_pixel;
+    uint8_t ref_pixel;
 
-    img=img_create(me->curr_frame->wt, me->curr_frame->ht, 0);
+    img=img_create(me->cur_frame->wt, me->cur_frame->ht, 0);
 
     for(h=0; h<me->mvec_table->ht; h++)
     {
@@ -20,16 +20,16 @@ struct img_t *me_block_reconstruct(struct me_block_t *me)
                 {
 #ifndef QT_NO_DEBUG
                             assert(sw_range+tb_size*h+me->mvec_table->data[h][w].h+lh >= 0);
-                            assert(sw_range+tb_size*h+me->mvec_table->data[h][w].h+lh < me->curr_frame->ht);
+                            assert(sw_range+tb_size*h+me->mvec_table->data[h][w].h+lh < me->cur_frame->ht);
                             assert(sw_range+tb_size*w+me->mvec_table->data[h][w].h+lw >= 0);
-                            assert(sw_range+tb_size*w+me->mvec_table->data[h][w].h+lw < me->curr_frame->wt);
+                            assert(sw_range+tb_size*w+me->mvec_table->data[h][w].h+lw < me->cur_frame->wt);
                             assert(sw_range+tb_size*h+lh >= 0);
-                            assert(sw_range+tb_size*h+lh < me->curr_frame->ht);
+                            assert(sw_range+tb_size*h+lh < me->cur_frame->ht);
                             assert(sw_range+tb_size*w+lw >= 0);
-                            assert(sw_range+tb_size*w+lw < me->curr_frame->wt);
+                            assert(sw_range+tb_size*w+lw < me->cur_frame->wt);
 #endif
-                    prev_pixel=me->prev_frame->data[sw_range+tb_size*h+me->mvec_table->data[h][w].h+lh][sw_range+tb_size*w+me->mvec_table->data[h][w].h+lw];
-                    img->data[sw_range+tb_size*h+lh][sw_range+tb_size*w+lw]=prev_pixel;
+                    ref_pixel=me->ref_frame->data[sw_range+tb_size*h+me->mvec_table->data[h][w].h+lh][sw_range+tb_size*w+me->mvec_table->data[h][w].h+lw];
+                    img->data[sw_range+tb_size*h+lh][sw_range+tb_size*w+lw]=ref_pixel;
                 }
             }
         }

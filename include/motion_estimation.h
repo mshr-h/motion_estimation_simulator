@@ -27,8 +27,8 @@ struct me_block_t
 {
     int tb_size;
     int sw_range; // -16..+16
-    struct img_t *curr_frame;
-    struct img_t *prev_frame;
+    struct img_t *cur_frame;
+    struct img_t *ref_frame;
     struct mvec_table_t *mvec_table;
 };
 
