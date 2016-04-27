@@ -55,8 +55,8 @@ int main_video_process(int argc, char *argv[])
     } else
         fp_out = stdout;
 
-    fprintf(fp_out,",fullsearch,,kernel1,,kernel2,,kernel3,,matching\n");
-    fprintf(fp_out,"frame#,ave_sad,matching,ave_sad,matching,ave_sad,matching,ave_sad,matching,ave_sad,matching\n");
+    fprintf(fp_out,",fullsearch 8bit,,fullsearch 4bit,,4pix 4bit,,2bit ad 6bit exor\n");
+    fprintf(fp_out,"frame#,ave_sad,matching,ave_sad,matching,ave_sad,matching,ave_sad,matching\n");
     fflush(fp_out);
 
     int num_of_frame=0;
@@ -67,30 +67,26 @@ int main_video_process(int argc, char *argv[])
         // some process start
         struct img_t *img_curr=img_copy(width,height,frame->y);
         struct img_t *img_prev=img_copy(width,height,frame_prev->y);
-        auto me_block_fullsearch         =me_block_create(img_curr, img_prev, 16, 16);
-        auto me_block_fullsearch_edge1   =me_block_create(img_curr, img_prev, 16, 16);
-        auto me_block_fullsearch_edge2   =me_block_create(img_curr, img_prev, 16, 16);
-        auto me_block_fullsearch_edge3   =me_block_create(img_curr, img_prev, 16, 16);
-        auto me_block_fullsearch_matching=me_block_create(img_curr, img_prev, 16, 16);
+        auto me_block_fullsearch_8bit                   = me_block_create(img_curr, img_prev, 16, 16);
+        auto me_block_fullsearch_4bit                   = me_block_create(img_curr, img_prev, 16, 16);
+        auto me_block_fullsearch_4pix_4bit              = me_block_create(img_curr, img_prev, 16, 16);
+        auto me_block_fullsearch_4pix_2bit_ad_6bit_exor = me_block_create(img_curr, img_prev, 16, 16);
 
-        fullsearch       (me_block_fullsearch         , pe_8bit_diff, compare_SAD                );
-        fullsearch_kernel(me_block_fullsearch_edge1   , pe_8bit_diff, compare_SAD         , krnl1);
-        fullsearch_kernel(me_block_fullsearch_edge2   , pe_8bit_diff, compare_SAD         , krnl2);
-        fullsearch_kernel(me_block_fullsearch_edge3   , pe_8bit_diff, compare_SAD         , krnl3);
-        fullsearch       (me_block_fullsearch_matching, pe_8bit_diff, compare_SAD_match       );
+        fullsearch(me_block_fullsearch_8bit                        , pe_8bit_diff           , compare_SAD);
+        fullsearch(me_block_fullsearch_4bit                        , pe_4bit_diff           , compare_SAD);
+        fullsearch_4pix(me_block_fullsearch_4pix_4bit              , pe_4bit_diff           , compare_SAD);
+        fullsearch_4pix(me_block_fullsearch_4pix_2bit_ad_6bit_exor , pe_2bit_diff_6bit_exor , compare_SAD);
 
-        fprintf(fp_out,"%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d\n", num_of_frame+2,
-               me_block_calc_ave_cost_sad(me_block_fullsearch),          me_block_calc_sum_cost_match(me_block_fullsearch),
-               me_block_calc_ave_cost_sad(me_block_fullsearch_edge1),    me_block_calc_sum_cost_match(me_block_fullsearch_edge1),
-               me_block_calc_ave_cost_sad(me_block_fullsearch_edge2),    me_block_calc_sum_cost_match(me_block_fullsearch_edge2),
-               me_block_calc_ave_cost_sad(me_block_fullsearch_edge3),    me_block_calc_sum_cost_match(me_block_fullsearch_edge3),
-               me_block_calc_ave_cost_sad(me_block_fullsearch_matching), me_block_calc_sum_cost_match(me_block_fullsearch_matching));
+        fprintf(fp_out,"%d,%f,%d,%f,%d,%f,%d,%f,%d\n", num_of_frame+2,
+               me_block_calc_ave_cost_sad(me_block_fullsearch_8bit),                   me_block_calc_sum_cost_match(me_block_fullsearch_8bit),
+               me_block_calc_ave_cost_sad(me_block_fullsearch_4bit),                   me_block_calc_sum_cost_match(me_block_fullsearch_4bit),
+               me_block_calc_ave_cost_sad(me_block_fullsearch_4pix_4bit),              me_block_calc_sum_cost_match(me_block_fullsearch_4pix_4bit),
+               me_block_calc_ave_cost_sad(me_block_fullsearch_4pix_2bit_ad_6bit_exor), me_block_calc_sum_cost_match(me_block_fullsearch_4pix_2bit_ad_6bit_exor));
 
-        me_block_destruct(me_block_fullsearch         );
-        me_block_destruct(me_block_fullsearch_edge1   );
-        me_block_destruct(me_block_fullsearch_edge2   );
-        me_block_destruct(me_block_fullsearch_edge3   );
-        me_block_destruct(me_block_fullsearch_matching);
+        me_block_destruct(me_block_fullsearch_8bit);
+        me_block_destruct(me_block_fullsearch_4bit);
+        me_block_destruct(me_block_fullsearch_4pix_4bit);
+        me_block_destruct(me_block_fullsearch_4pix_2bit_ad_6bit_exor);
 
         img_destruct(img_prev);
         img_destruct(img_curr);

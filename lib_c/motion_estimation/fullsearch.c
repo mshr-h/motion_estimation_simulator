@@ -58,6 +58,18 @@ void fullsearch(struct me_block_t *me_block, uint8_t (*pe)(uint8_t, uint8_t), st
                 }
             }
 
+            // recompute matching error
+            min_mvec.cost_sad=0;
+            for(lh=0; lh<tb_size; lh++)
+            {
+                for(lw=0; lw<tb_size; lw++)
+                {
+                    cur_pix=tb_memory->data[lh][lw];
+                    ref_pix=sw_memory->data[min_mvec.h+sw_range+lh][min_mvec.w+sw_range+lw];
+                    min_mvec.cost_sad+=abs(cur_pix-ref_pix);
+                }
+            }
+
             me_block->mvec_table->data[h][w]= min_mvec;
         }
     }
