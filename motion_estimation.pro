@@ -45,4 +45,5 @@ SOURCES += \
     lib_c/motion_estimation/fullsearch_4pix_kernel.c \
     lib_c/motion_estimation/fullsearch_kernel.c \
     lib_c/motion_estimation/fullsearch_4pix_only_kernel.c \
-    lib_c/motion_estimation/update_minvec.c
+    lib_c/motion_estimation/update_minvec.c \
+    lib_c/motion_estimation/me_block_calc_psnr.c

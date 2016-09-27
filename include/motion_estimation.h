@@ -43,6 +43,7 @@ void me_block_destruct(struct me_block_t *me_block);
 struct img_t *me_block_reconstruct(struct me_block_t *me);
 double me_block_calc_ave_cost_sad(struct me_block_t *me_block);
 int me_block_calc_sum_cost_match(struct me_block_t *me_block);
+double me_block_calc_psnr(struct me_block_t *me_block);
 
 void fullsearch                   (struct me_block_t *me_block, uint8_t (*pe)(uint8_t, uint8_t), struct mvec_t (*update)(struct mvec_t, struct mvec_t));
 void fullsearch_kernel            (struct me_block_t *me_block, uint8_t (*pe)(uint8_t, uint8_t), struct mvec_t (*update)(struct mvec_t, struct mvec_t), int krnl[3][3]);
