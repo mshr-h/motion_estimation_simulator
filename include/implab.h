@@ -35,6 +35,13 @@ struct img_yuv_t
     uint8_t **v;
 };
 
+struct integrated_img_t
+{
+    int wt;
+    int ht;
+    int32_t **data;
+};
+
 // imp functions
 
 #ifdef __cplusplus
@@ -55,6 +62,10 @@ void buf_to_img_yuv(uint8_t *frame_buf, struct img_yuv_t *frame);
 void img_yuv_to_buf(struct img_yuv_t *frame, uint8_t *frame_buf);
 struct img_rgb_t *img_yuv_to_rgb(struct img_yuv_t *img_yuv);
 uint8_t  **Malloc2D_uchr(int ht, int wt, uint8_t init);
+struct integrated_img_t *integrated_img_create(int wt, int ht, uint64_t init);
+void integrated_img_destruct(struct integrated_img_t *img);
+struct integrated_img_t *img_to_integrated(struct img_t *img);
+int32_t  **Malloc2D_int32(int ht, int wt, int32_t init);
 #ifdef __cplusplus
 }
 #endif

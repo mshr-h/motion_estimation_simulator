@@ -47,4 +47,8 @@ SOURCES += \
     lib_c/motion_estimation/fullsearch_4pix_only_kernel.c \
     lib_c/motion_estimation/update_minvec.c \
     lib_c/motion_estimation/me_block_calc_psnr.c \
-    lib_c/motion_estimation/me_block_calc_ssim.c
+    lib_c/motion_estimation/me_block_calc_ssim.c \
+    lib_c/implab/integrated_img_create.c \
+    lib_c/implab/integrated_img_destruct.c \
+    lib_c/implab/img_to_integrated.c \
+    lib_c/implab/Malloc2D_int32_t.c

@@ -1,16 +1,16 @@
 #include  "include/implab.h"
 
-uint8_t **Malloc2D_uchr(int wt, int ht, uint8_t init)
+int32_t  **Malloc2D_int32(int ht, int wt, int32_t init)
 {
-    int h,w;
-    uint8_t **x;
+    int h, w;
+    int32_t **x;
 
-    x=(uint8_t **)malloc(sizeof(void *)*ht);
+    x=(int32_t **)malloc(sizeof(int32_t)*ht);
     if(x==NULL){
         printf("malloc failed (%s,%i)\n",__FILE__,__LINE__);
         exit(-1);
     }
-    x[0]=(uint8_t *)malloc(sizeof(uint8_t)*ht*wt);
+    x[0]=(int32_t *)malloc(sizeof(int32_t)*ht*wt);
     if(x[0]==NULL){
         printf("malloc failed (%s,%i)\n",__FILE__,__LINE__);
         exit(-1);
