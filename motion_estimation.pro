@@ -51,4 +51,5 @@ SOURCES += \
     lib_c/implab/integrated_img_create.c \
     lib_c/implab/integrated_img_destruct.c \
     lib_c/implab/img_to_integrated.c \
-    lib_c/implab/Malloc2D_int32_t.c
+    lib_c/implab/Malloc2D_int32_t.c \
+    lib_c/motion_estimation/breakingoff.c
