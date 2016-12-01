@@ -25,8 +25,6 @@ SOURCES += \
     lib_c/implab/buf_to_img_yuv.c \
     lib_c/implab/img_yuv_to_buf.c \
     lib_c/implab/img_yuv_to_rgb.c \
-    lib_c/motion_estimation/processor_element/pe_diff.c \
-    lib_c/motion_estimation/processor_element/pe_diff_exor.c \
     lib_c/motion_estimation/fullsearch.c \
     lib_c/motion_estimation/me_block_create.c \
     lib_c/motion_estimation/me_block_destruct.c \
@@ -52,4 +50,5 @@ SOURCES += \
     lib_c/implab/integrated_img_destruct.c \
     lib_c/implab/img_to_integrated.c \
     lib_c/implab/Malloc2D_int32_t.c \
-    lib_c/motion_estimation/breakingoff.c
+    lib_c/motion_estimation/breakingoff.c \
+    lib_c/motion_estimation/processor_element.c
